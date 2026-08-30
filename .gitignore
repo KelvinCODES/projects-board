@@ -1,0 +1,15 @@
+# Screen recordings and other generated artifacts
+videos/
+*.mov
+*.mp4
+
+# Runtime junk
+__pycache__/
+board.log
+
+# Status files are per-machine runtime state, not code. They change every few
+# minutes and name internal branches and tickets.
+*.md
+!_template.md
+!README.md
+archive/
