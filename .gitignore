@@ -6,6 +6,7 @@ videos/
 # Runtime junk
 __pycache__/
 board.log
+.pr-cache.json
 
 # Status files are per-machine runtime state, not code. They change every few
 # minutes and name internal branches and tickets.

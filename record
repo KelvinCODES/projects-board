@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
-"""Record a screen capture for a project and attach it to its status file.
+"""Record the Slack window for a project and attach the clip to its status file.
 
-Usage: record <branch-name> poc|verify [seconds]
+Usage: record <branch-name> poc|verify [seconds] [--app NAME] [--full-screen]
 
-Records with screencapture (ctrl-c stops it when no duration is given), saves
-to videos/<branch-name>-<kind>[-N].mov, appends the matching evidence bullet to
-<branch-name>.md, and bumps last-updated.
+Brings the app (Slack by default) to the front, records only its front window
+with screencapture (ctrl-c stops it when no duration is given), saves to
+videos/<branch-name>-<kind>[-N].mov, appends the matching evidence bullet to
+<branch-name>.md, and bumps last-updated. Record the window where the
+interaction happens: Slack for MCP-driven message tests, --app "Google Chrome"
+when the test is driven through the dev-controlled Chrome (button clicks,
+modals), with the target tab selected first. --full-screen records everything
+instead, for a feature that does not live in one window.
 """
 
 import argparse
@@ -18,12 +23,29 @@ BOARD = Path(__file__).resolve().parent
 BULLETS = {'poc': 'video-poc', 'verify': 'video'}
 
 
+def front_window_rect(app: str) -> str:
+    """x,y,w,h of the app's front window, after bringing the app forward."""
+    script = (
+        f'tell application "{app}" to activate\n'
+        'delay 0.5\n'
+        f'tell application "System Events" to tell process "{app}" '
+        'to get {position, size} of front window'
+    )
+    result = subprocess.run(['osascript', '-e', script], capture_output=True, text=True)
+    if result.returncode != 0 or not result.stdout.strip():
+        raise SystemExit(f'{app} has no front window to record: {result.stderr.strip()}')
+    return ','.join(part.strip() for part in result.stdout.strip().split(','))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument('branch_name')
     ap.add_argument('kind', choices=sorted(BULLETS))
     ap.add_argument('seconds', nargs='?', type=int,
                     help='record this many seconds instead of until ctrl-c')
+    ap.add_argument('--app', default='Slack', help='app whose front window to record')
+    ap.add_argument('--full-screen', action='store_true',
+                    help='record the whole screen instead of one window')
     args = ap.parse_args()
     status = BOARD / f'{args.branch_name}.md'
     if not status.is_file():
@@ -36,6 +58,10 @@ def main():
         out, n = videos / f'{args.branch_name}-{args.kind}-{n}.mov', n + 1
 
     cmd = ['screencapture']
+    if not args.full_screen:
+        rect = front_window_rect(args.app)
+        cmd += ['-R', rect]
+        print(f'recording the {args.app} window at {rect}')
     if args.seconds:
         cmd += ['-V', str(args.seconds)]
         print(f'recording {args.seconds}s to {out} …')
