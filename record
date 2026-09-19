@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Record the Slack window for a project and attach the clip to its status file.
 
-Usage: record <branch-name> poc|verify [seconds] [--app NAME] [--full-screen]
+Usage: record <branch-name> poc|verify [seconds] [--app NAME] [--chrome CHANNEL_ID [--thread TS]]
+       [--full-screen] [--clip [--speed N] [--crop thread|none]] [--reuse RAW.mp4]
 
 Brings the app (Slack by default) to the front, records only its front window
 with screencapture (ctrl-c stops it when no duration is given), saves to
@@ -10,10 +11,23 @@ videos/<branch-name>-<kind>[-N].mov, appends the matching evidence bullet to
 interaction happens: Slack for MCP-driven message tests, --app "Google Chrome"
 when the test is driven through the dev-controlled Chrome (button clicks,
 modals), with the target tab selected first. --full-screen records everything
-instead, for a feature that does not live in one window.
+instead, for a feature that does not live in one window. --chrome CHANNEL_ID opens the
+Slack web client on that conversation in its own Chrome profile and records it through the
+DevTools screencast (chrome_screencast.mjs), so Chrome can sit behind other windows and the
+take never depends on the Slack app's view. Needs a duration and a one-time Slack login in
+that profile (~/.claude/projects-board/chrome-profile). Writes .mp4 instead of .mov.
+--thread TS (with --chrome) records that message's reply thread instead of the channel view: send
+the message first, take its ts, then record, since a bot that answers in a thread streams there.
+--clip cuts the PR clip from the take: the DM channel plus its thread (--crop thread, the default
+for --chrome takes; --crop none keeps the frame), sped up --speed times (6), H.264 yuv420p, no
+audio, +faststart, as videos/<name>-<N>x.mp4, plus the same window as videos/<name>.gif; it adds
+`- video:` (or `- video-poc:`) and `- video-gif:` bullets with the note in parentheses and nothing
+after it, and writes three check frames to /tmp/record-frames/ to look at before the clip is used.
+--reuse RAW.mp4 skips the recording and cuts the clip from an existing take.
 """
 
 import argparse
+import time
 import re
 import subprocess
 from datetime import date
@@ -21,6 +35,62 @@ from pathlib import Path
 
 BOARD = Path(__file__).resolve().parent
 BULLETS = {'poc': 'video-poc', 'verify': 'video'}
+SLACK_TEAM_ID = 'T1S6DF4G6'
+
+
+def record_slack_conversation_via_chrome(channel_id: str, seconds: int, out: Path,
+                                         thread_ts: str = '') -> None:
+    """Records the Slack web client through Chrome's DevTools screencast (window can stay in the back).
+
+    With a thread ts the take shows that message's reply thread, where a threaded bot streams.
+    """
+    url = f'https://app.slack.com/client/{SLACK_TEAM_ID}/{channel_id}'
+    if thread_ts:
+        url += f'/thread/{channel_id}-{thread_ts}'
+    script = BOARD / 'chrome_screencast.mjs'
+    subprocess.run(['node', str(script), url, str(seconds), str(out), '--warmup', '1'], check=True)
+
+
+# The screencast viewport is 1100x1000; this window is the DM channel and its thread pane, without
+# the workspace sidebar or the notification banner, so a clip shows only the bot exchange.
+CROPS = {'thread': 'crop=784:800:316:50', 'none': ''}
+FRAMES = Path('/tmp/record-frames')
+
+
+def cut_clip(raw: Path, speed: int, crop: str) -> tuple[Path, Path]:
+    """The PR clip and its GIF from a raw take: cropped, sped up, browser-safe H.264."""
+    stem = raw.with_suffix('')
+    stem = Path(str(stem).removesuffix('-raw'))
+    mp4 = stem.with_name(f'{stem.name}-{speed}x.mp4')
+    gif = stem.with_suffix('.gif')
+    filters = [f for f in (CROPS[crop], f'setpts=PTS/{speed}', 'format=yuv420p') if f]
+    subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', str(raw), '-vf', ','.join(filters),
+                    '-c:v', 'libx264', '-profile:v', 'high', '-level', '4.0', '-crf', '20', '-an',
+                    '-movflags', '+faststart', str(mp4)], check=True)
+    palette = ('fps=12,scale=640:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=96[p];'
+               '[s1][p]paletteuse=dither=bayer:bayer_scale=3')
+    subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', str(mp4), '-vf', palette, str(gif)],
+                   check=True)
+    FRAMES.mkdir(exist_ok=True)
+    duration = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
+                                     '-of', 'csv=p=0', str(mp4)], capture_output=True,
+                                    text=True).stdout.strip() or 0)
+    for label, at in (('start', 0.2), ('middle', duration / 2), ('end', max(duration - 0.3, 0))):
+        subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-ss', f'{at:.2f}', '-i', str(mp4),
+                        '-frames:v', '1', '-update', '1', str(FRAMES / f'{stem.name}-{label}.png')],
+                       check=True)
+    print(f'clip {mp4.name} {mp4.stat().st_size // 1024}K, gif {gif.name} {gif.stat().st_size // 1024}K,'
+          f' check frames in {FRAMES}/{stem.name}-{{start,middle,end}}.png')
+    return mp4, gif
+
+
+def add_bullets(status: Path, bullets: list[str]) -> None:
+    text = status.read_text().rstrip() + '\n' + '\n'.join(bullets) + '\n'
+    text = re.sub(r'(?m)^- last-updated:.*$',
+                  f'- last-updated: {date.today().isoformat()}', text)
+    status.write_text(text)
+    for bullet in bullets:
+        print(f'added `{bullet}` to {status.name}')
 
 
 def front_window_rect(app: str) -> str:
@@ -44,8 +114,18 @@ def main():
     ap.add_argument('seconds', nargs='?', type=int,
                     help='record this many seconds instead of until ctrl-c')
     ap.add_argument('--app', default='Slack', help='app whose front window to record')
+    ap.add_argument('--chrome', metavar='CHANNEL_ID',
+                    help='record the Slack web client on this conversation in a new Chrome window')
     ap.add_argument('--full-screen', action='store_true',
                     help='record the whole screen instead of one window')
+    ap.add_argument('--thread', metavar='TS', default='',
+                    help='with --chrome: record this message\'s reply thread')
+    ap.add_argument('--clip', action='store_true',
+                    help='cut the PR clip (mp4) and a gif from the take and add both bullets')
+    ap.add_argument('--speed', type=int, default=6, help='clip speed-up factor (default 6)')
+    ap.add_argument('--crop', choices=sorted(CROPS), default=None,
+                    help='clip window: thread (default for --chrome takes) or none')
+    ap.add_argument('--reuse', metavar='RAW', help='cut the clip from this existing take instead of recording')
     args = ap.parse_args()
     status = BOARD / f'{args.branch_name}.md'
     if not status.is_file():
@@ -57,6 +137,33 @@ def main():
     while out.exists():
         out, n = videos / f'{args.branch_name}-{args.kind}-{n}.mov', n + 1
 
+    if args.reuse:
+        out = Path(args.reuse).expanduser()
+        if not out.is_file():
+            raise SystemExit(f'no take at {out}')
+        args.clip = True
+    elif args.chrome:
+        if not args.seconds:
+            raise SystemExit('--chrome needs a duration in seconds')
+        out = out.with_name(f'{args.branch_name}-{args.kind}-raw.mp4' if args.clip else out.with_suffix('.mp4').name)
+        record_slack_conversation_via_chrome(args.chrome, args.seconds, out, args.thread)
+    else:
+        record_front_window(args, out)
+
+    if not args.clip:
+        add_bullets(status, [f'- {BULLETS[args.kind]}: ~/{out.relative_to(Path.home())}'])
+        return
+    crop = args.crop or ('thread' if (args.chrome or args.reuse) else 'none')
+    mp4, gif = cut_clip(out, args.speed, crop)
+    stamp = date.today().isoformat()
+    add_bullets(status, [
+        f'- {BULLETS[args.kind]}: ~/{mp4.relative_to(Path.home())} ({stamp}, {args.speed}x, '
+        f'raw take {out.name}; reveal in Finder and drag into a PR description)',
+        f'- video-gif: ~/{gif.relative_to(Path.home())} (the same take as a GIF, for the KB and Slack)',
+    ])
+
+
+def record_front_window(args, out: Path) -> None:
     cmd = ['screencapture']
     if not args.full_screen:
         rect = front_window_rect(args.app)
@@ -79,12 +186,6 @@ def main():
                          'granted to this terminal (System Settings → '
                          'Privacy & Security)?')
 
-    bullet = f'- {BULLETS[args.kind]}: ~/{out.relative_to(Path.home())}'
-    text = status.read_text().rstrip() + f'\n{bullet}\n'
-    text = re.sub(r'(?m)^- last-updated:.*$',
-                  f'- last-updated: {date.today().isoformat()}', text)
-    status.write_text(text)
-    print(f'added `{bullet}` to {status.name}')
 
 
 if __name__ == '__main__':

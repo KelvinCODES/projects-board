@@ -1,0 +1,2040 @@
+<!doctype html>
+<html lang="en" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Orchestration Layout</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Orchestration Layout" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; data-visualize-standalone&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Orchestration Layout&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --icon-size: 16px;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --corner-shape: round;
+  --radius: var(--border-radius-lg, 10px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: var(--visualize-paint-gutter, 0px);
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans) !important;
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: var(--corner-shape);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card, .progress) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin-block: 6px;
+  border: 0;
+  background: var(--border);
+}
+
+.nav {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.progress {
+  display: flex;
+  height: 8px;
+  margin-block: calc((var(--line-height-normal, 1.5em) - 8px) / 2);
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+}
+
+.progress-bar:only-child {
+  border-radius: var(--radius-full);
+}
+
+.progress-bar {
+  height: 100%;
+  flex-shrink: 0;
+  border: 0;
+  background: var(--viz-series-1);
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.nav-link,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn,
+.nav-link {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover,
+.nav-link:not(:disabled):not([aria-disabled=&quot;true&quot;]):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.nav-pills .nav-link {
+  min-width: 0;
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.nav-justified .nav-link {
+  flex: 1 1 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.nav-pills .nav-link.active {
+  color: var(--foreground);
+  background: var(--muted);
+}
+
+.btn:disabled,
+.nav-link:disabled,
+.nav-link[aria-disabled=&quot;true&quot;] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: var(--corner-shape);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: var(--corner-shape);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+  [aria-pressed=&quot;true&quot;],
+  [aria-selected=&quot;true&quot;],
+  .is-selected
+) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .btn,
+  .nav-link,
+  .form-control,
+  .form-select {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Keep small-screen WebKit from zooming when a text field receives focus. */
+  .form-control,
+  .form-select {
+    font-size: max(16px, var(--font-size-normal));
+  }
+
+  .form-control[type=&quot;file&quot;]::file-selector-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .form-control-color[type=&quot;color&quot;] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-control:is(
+    [type=&quot;date&quot;],
+    [type=&quot;datetime-local&quot;],
+    [type=&quot;month&quot;],
+    [type=&quot;time&quot;],
+    [type=&quot;week&quot;]
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    padding-block: 8px;
+  }
+
+  .form-check {
+    min-height: 44px;
+    padding-inline: 15px;
+  }
+
+  .form-check-input {
+    position: relative;
+  }
+
+  .form-check-input::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    content: &quot;&quot;;
+    transform: translate(-50%, -50%);
+  }
+
+  .form-check-label {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .form-range {
+    height: 44px;
+    touch-action: pan-y;
+  }
+
+  .form-range::-webkit-slider-runnable-track {
+    height: 44px;
+  }
+
+  .form-range::-moz-range-track {
+    height: 44px;
+  }
+
+  .form-range::-webkit-slider-thumb {
+    margin-top: 12px;
+  }
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: var(--icon-size) !important;
+  height: var(--icon-size) !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;kelvin-orchestration&quot; aria-label=&quot;Dashboard layout proposal&quot;&gt;
+  &lt;style&gt;
+    #kelvin-orchestration {
+      --kb-bg: light-dark(#f9f9f7, #0d0d0d);
+      --kb-panel: light-dark(#fcfcfb, #1a1a19);
+      --kb-ink: light-dark(#0b0b0b, #f4f4f0);
+      --kb-secondary: light-dark(#52514e, #c3c2b7);
+      --kb-border: light-dark(#deded8, #373733);
+      --kb-tint: light-dark(#eeeeea, #272724);
+      --kb-green: light-dark(#166b24, #93d49b);
+      --kb-green-bg: light-dark(#e3f1e5, #193421);
+      --kb-amber: light-dark(#80520a, #f1ce8b);
+      --kb-amber-bg: light-dark(#fbefd7, #392d15);
+      --kb-red: light-dark(#a72d2d, #f8aaaa);
+      color-scheme: light dark; color: var(--kb-ink); background: var(--kb-bg);
+      font: 14px/1.5 system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif;
+      border: 1px solid var(--kb-border); border-radius: 10px; overflow: hidden;
+    }
+    #kelvin-orchestration * { box-sizing: border-box; }
+    #kelvin-orchestration [hidden] { display: none !important; }
+    #kelvin-orchestration .kb-preview { padding: 7px 22px; background: var(--kb-tint); color: var(--kb-secondary); font-size: 12px; }
+    #kelvin-orchestration header { padding: 20px 24px 0; }
+    #kelvin-orchestration .kb-brand { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    #kelvin-orchestration .kb-brand strong { font-size: 18px; font-weight: 600; }
+    #kelvin-orchestration nav { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 16px; border-bottom: 1px solid var(--kb-border); }
+    #kelvin-orchestration button, #kelvin-orchestration input, #kelvin-orchestration select, #kelvin-orchestration textarea { font: inherit; color: inherit; }
+    #kelvin-orchestration button { background: var(--kb-panel); border: 1px solid var(--kb-border); border-radius: 6px; padding: 7px 11px; cursor: pointer; }
+    #kelvin-orchestration button:hover { background: var(--kb-tint); }
+    #kelvin-orchestration .kb-primary { background: var(--kb-ink); color: var(--kb-bg); border-color: var(--kb-ink); }
+    #kelvin-orchestration .kb-primary:hover { opacity: .86; background: var(--kb-ink); }
+    #kelvin-orchestration nav button { background: transparent; border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: 9px 12px; color: var(--kb-secondary); }
+    #kelvin-orchestration nav button[aria-current=&quot;page&quot;] { border-color: var(--kb-ink); color: var(--kb-ink); }
+    #kelvin-orchestration main { padding: 24px; }
+    #kelvin-orchestration h1 { font-size: 20px; margin: 0 0 5px; line-height: 1.3; font-weight: 600; }
+    #kelvin-orchestration h2 { font-size: 15px; margin: 0 0 12px; font-weight: 600; }
+    #kelvin-orchestration h3 { font-size: 14px; margin: 0 0 7px; font-weight: 600; }
+    #kelvin-orchestration p { margin: 0 0 14px; }
+    #kelvin-orchestration small, #kelvin-orchestration .kb-muted { color: var(--kb-secondary); }
+    #kelvin-orchestration small { font-size: 12px; display: block; }
+    #kelvin-orchestration .kb-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #kelvin-orchestration .kb-between { justify-content: space-between; }
+    #kelvin-orchestration .kb-heading { margin-bottom: 22px; }
+    #kelvin-orchestration .kb-panel { border: 1px solid var(--kb-border); background: var(--kb-panel); border-radius: 10px; padding: 17px; min-width: 0; }
+    #kelvin-orchestration .kb-columns { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 18px; }
+    #kelvin-orchestration .kb-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    #kelvin-orchestration .kb-stack { display: grid; gap: 16px; }
+    #kelvin-orchestration .kb-badge { display: inline-block; border-radius: 20px; padding: 2px 8px; font-size: 12px; background: var(--kb-tint); white-space: nowrap; }
+    #kelvin-orchestration .kb-working { color: var(--kb-green); background: var(--kb-green-bg); }
+    #kelvin-orchestration .kb-waiting { color: var(--kb-amber); background: var(--kb-amber-bg); }
+    #kelvin-orchestration .kb-line { border-top: 1px solid var(--kb-border); margin: 14px 0; }
+    #kelvin-orchestration .kb-link { padding: 0; background: transparent; border: 0; text-decoration: underline; text-underline-offset: 3px; }
+    #kelvin-orchestration .kb-link:hover { background: transparent; }
+    #kelvin-orchestration .kb-stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    #kelvin-orchestration .kb-value { font-size: 24px; font-variant-numeric: tabular-nums; margin: 4px 0; }
+    #kelvin-orchestration .kb-table-wrap { overflow-x: auto; }
+    #kelvin-orchestration table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+    #kelvin-orchestration th { font-weight: 500; color: var(--kb-secondary); }
+    #kelvin-orchestration th, #kelvin-orchestration td { padding: 11px 8px; border-bottom: 1px solid var(--kb-border); vertical-align: top; }
+    #kelvin-orchestration th:first-child, #kelvin-orchestration td:first-child { padding-left: 0; }
+    #kelvin-orchestration th:last-child, #kelvin-orchestration td:last-child { padding-right: 0; }
+    #kelvin-orchestration tr:last-child td { border-bottom: 0; }
+    #kelvin-orchestration label { display: grid; gap: 6px; font-size: 13px; min-width: 0; }
+    #kelvin-orchestration input, #kelvin-orchestration select, #kelvin-orchestration textarea { width: 100%; min-width: 0; background: var(--kb-panel); border: 1px solid var(--kb-border); border-radius: 6px; padding: 8px 10px; }
+    #kelvin-orchestration textarea { resize: vertical; min-height: 100px; }
+    #kelvin-orchestration .kb-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    #kelvin-orchestration details { margin-top: 20px; }
+    #kelvin-orchestration summary { cursor: pointer; font-weight: 500; margin-bottom: 12px; }
+    #kelvin-orchestration .kb-stations { display: flex; flex-wrap: wrap; gap: 7px; margin: 18px 0; font-size: 12px; }
+    #kelvin-orchestration .kb-stations span { padding: 5px 8px; background: var(--kb-tint); border-radius: 5px; }
+    #kelvin-orchestration .kb-stations .kb-current { background: var(--kb-green-bg); color: var(--kb-green); }
+    #kelvin-orchestration .kb-task { display: block; text-align: left; width: 100%; margin: 7px 0; padding: 12px; }
+    #kelvin-orchestration .kb-task[aria-pressed=&quot;true&quot;] { border-color: var(--kb-ink); }
+    #kelvin-orchestration .kb-task strong { font-weight: 500; }
+    #kelvin-orchestration .kb-events { margin: 0; padding: 0; list-style: none; }
+    #kelvin-orchestration .kb-events li { padding: 9px 0; border-bottom: 1px solid var(--kb-border); }
+    #kelvin-orchestration .kb-events time { font-variant-numeric: tabular-nums; font-size: 12px; color: var(--kb-secondary); margin-right: 7px; }
+    #kelvin-orchestration .kb-meter { height: 6px; border-radius: 4px; background: var(--kb-tint); margin-top: 7px; overflow: hidden; }
+    #kelvin-orchestration .kb-meter span { display: block; height: 100%; background: var(--kb-secondary); }
+    #kelvin-orchestration .kb-definition { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 16px; margin: 12px 0; font-size: 13px; }
+    #kelvin-orchestration dt { color: var(--kb-secondary); }
+    #kelvin-orchestration dd { margin: 0; overflow-wrap: anywhere; }
+    #kelvin-orchestration .kb-notice { padding: 12px 14px; background: var(--kb-amber-bg); color: var(--kb-amber); border-radius: 7px; margin: 16px 0; }
+    #kelvin-orchestration .kb-toast { padding: 10px 24px; background: var(--kb-green-bg); color: var(--kb-green); }
+    #kelvin-orchestration .kb-tight .kb-panel { padding: 12px; }
+    @media (max-width: 720px) {
+      #kelvin-orchestration .kb-columns { grid-template-columns: 1fr; }
+      #kelvin-orchestration .kb-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #kelvin-orchestration .kb-fields { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 450px) {
+      #kelvin-orchestration header { padding: 16px 12px 0; }
+      #kelvin-orchestration main { padding: 18px 12px; }
+      #kelvin-orchestration .kb-grid { grid-template-columns: 1fr; }
+      #kelvin-orchestration nav button { padding: 9px 8px; font-size: 13px; }
+      #kelvin-orchestration .kb-definition { grid-template-columns: 1fr; gap: 2px; }
+      #kelvin-orchestration dd { margin-bottom: 8px; }
+    }
+    @media (pointer: coarse) {
+      #kelvin-orchestration button, #kelvin-orchestration input, #kelvin-orchestration select { min-height: 44px; }
+      #kelvin-orchestration input, #kelvin-orchestration select, #kelvin-orchestration textarea { font-size: 16px; }
+    }
+    #kelvin-orchestration {
+      --kb-bg: light-dark(#f8f9fc, #111318);
+      --kb-panel: light-dark(#ffffff, #191c22);
+      --kb-ink: light-dark(#202531, #eef0f6);
+      --kb-secondary: light-dark(#60697b, #a9b1c1);
+      --kb-border: light-dark(#e3e7ee, #2d323e);
+      --kb-tint: light-dark(#eef1f6, #252a34);
+      --kb-accent: light-dark(#4359c7, #a2b0ff);
+      --kb-accent-bg: light-dark(#edf0ff, #252d4b);
+      --kb-accent-button: light-dark(#4359c7, #bac4ff);
+      --kb-accent-button-text: light-dark(#ffffff, #192340);
+      --kb-green: light-dark(#197058, #8ad7be);
+      --kb-green-bg: light-dark(#e6f4ee, #1e3830);
+      --kb-amber: light-dark(#8c5a16, #eac78c);
+      --kb-amber-bg: light-dark(#fff4df, #3d301d);
+      font-size: 13px; line-height: 1.55; border-radius: 12px; text-align: left;
+    }
+    #kelvin-orchestration .kb-preview { font-size: 11px; padding: 8px 18px; background: var(--kb-panel); border-bottom: 1px solid var(--kb-border); display: flex; gap: 12px; flex-wrap: wrap; }
+    #kelvin-orchestration .kb-preview &gt; span { font-size: 10px; letter-spacing: .09em; font-weight: 600; color: var(--kb-accent); }
+    #kelvin-orchestration .kb-shell { display: grid; grid-template-columns: 174px minmax(0, 1fr); }
+    #kelvin-orchestration .kb-sidebar { display: flex; flex-direction: column; gap: 20px; padding: 20px 12px; border-right: 1px solid var(--kb-border); background: var(--kb-panel); min-width: 0; }
+    #kelvin-orchestration .kb-workspace-brand { display: flex; align-items: center; gap: 9px; padding: 0 4px; }
+    #kelvin-orchestration .kb-workspace-brand strong { font-size: 14px; letter-spacing: -.2px; }
+    #kelvin-orchestration .kb-workspace-brand small { font-size: 11px; }
+    #kelvin-orchestration .kb-workspace-mark { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: var(--kb-ink); color: var(--kb-panel); font-size: 15px; font-weight: 600; }
+    #kelvin-orchestration .kb-new-run { width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; }
+    #kelvin-orchestration .kb-primary { background: var(--kb-accent-button); color: var(--kb-accent-button-text); border-color: var(--kb-accent-button); }
+    #kelvin-orchestration .kb-primary:hover { background: var(--kb-accent-button); }
+    #kelvin-orchestration nav { display: grid; gap: 5px; padding: 0; border: 0; }
+    #kelvin-orchestration nav button { display: flex; align-items: center; gap: 8px; border: 0; padding: 9px 10px; border-radius: 6px; text-align: left; font-size: 12px; }
+    #kelvin-orchestration nav button[aria-current=&quot;page&quot;] { color: var(--kb-accent); background: var(--kb-accent-bg); font-weight: 500; }
+    #kelvin-orchestration .kb-nav-count { margin-left: auto; font-size: 11px; font-variant-numeric: tabular-nums; }
+    #kelvin-orchestration .kb-sidebar-section { display: grid; gap: 7px; }
+    #kelvin-orchestration .kb-eyebrow { font-size: 10px; letter-spacing: .09em; color: var(--kb-secondary); font-weight: 600; padding: 0 10px; }
+    #kelvin-orchestration .kb-project-shortcut { background: transparent; border: 0; padding: 7px 10px; font-size: 12px; display: flex; align-items: center; gap: 9px; text-align: left; }
+    #kelvin-orchestration .kb-dot { width: 6px; height: 6px; border-radius: 100%; background: var(--kb-green); display: inline-block; flex: 0 0 auto; }
+    #kelvin-orchestration .kb-dot-amber { background: var(--kb-amber); }
+    #kelvin-orchestration .kb-sidebar-footer { margin-top: auto; padding: 18px 6px 0; border-top: 1px solid var(--kb-border); font-size: 11px; display: grid; gap: 5px; }
+    #kelvin-orchestration .kb-sidebar-footer strong { font-size: 12px; font-weight: 500; }
+    #kelvin-orchestration .kb-sidebar-footer small { font-size: 11px; }
+    #kelvin-orchestration .kb-sidebar-footer button { text-align: left; margin-top: 6px; font-size: 11px; }
+    #kelvin-orchestration i[data-lucide], #kelvin-orchestration .lucide { width: 15px; height: 15px; flex: 0 0 auto; vertical-align: middle; }
+    #kelvin-orchestration .kb-content { min-width: 0; }
+    #kelvin-orchestration .kb-topbar { padding: 11px 24px; min-height: 52px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid var(--kb-border); background: var(--kb-panel); font-size: 12px; }
+    #kelvin-orchestration .kb-command-trigger { display: flex; align-items: center; gap: 8px; font-size: 11px; padding: 5px 7px; min-width: 166px; color: var(--kb-secondary); }
+    #kelvin-orchestration kbd { margin-left: auto; font: 10px/1.5 ui-monospace, monospace; background: var(--kb-tint); padding: 1px 5px; border: 1px solid var(--kb-border); border-radius: 4px; white-space: nowrap; }
+    #kelvin-orchestration main { padding: 26px 24px; }
+    #kelvin-orchestration h1 { font-size: 23px; letter-spacing: -.65px; font-weight: 600; margin: 4px 0 8px; overflow-wrap: anywhere; }
+    #kelvin-orchestration h2 { font-size: 14px; letter-spacing: -.15px; font-weight: 600; }
+    #kelvin-orchestration h3 { font-size: 13px; font-weight: 600; }
+    #kelvin-orchestration .kb-heading { margin-bottom: 20px; }
+    #kelvin-orchestration .kb-heading small { font-size: 11px; }
+    #kelvin-orchestration .kb-badge { font-size: 11px; font-weight: 500; padding: 3px 8px; }
+    #kelvin-orchestration .kb-panel { padding: 17px; border-radius: 9px; }
+    #kelvin-orchestration .kb-columns { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 16px; }
+    #kelvin-orchestration .kb-console { border-top: 2px solid var(--kb-accent); }
+    #kelvin-orchestration .kb-console h2 { margin-bottom: 2px; }
+    #kelvin-orchestration .kb-avatar { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--kb-accent-bg); color: var(--kb-accent); font-size: 12px; font-weight: 600; flex: 0 0 auto; }
+    #kelvin-orchestration .kb-console-progress { margin: 13px 0 10px; font-size: 13px; }
+    #kelvin-orchestration .kb-console-next { padding-top: 10px; border-top: 1px solid var(--kb-border); }
+    #kelvin-orchestration .kb-stations { gap: 4px; padding: 0; margin: 18px 0; }
+    #kelvin-orchestration .kb-stations span { background: transparent; color: var(--kb-secondary); padding: 5px 7px; font-size: 11px; }
+    #kelvin-orchestration .kb-stations .kb-current { color: var(--kb-accent); background: var(--kb-accent-bg); font-weight: 500; }
+    #kelvin-orchestration .kb-task { background: transparent; border: 1px solid transparent; border-radius: 7px; padding: 11px; margin: 4px 0; }
+    #kelvin-orchestration .kb-task[aria-pressed=&quot;true&quot;] { background: var(--kb-accent-bg); border-color: var(--kb-accent-bg); }
+    #kelvin-orchestration .kb-task small { font-size: 11px; margin-top: 4px; }
+    #kelvin-orchestration .kb-task .kb-row { gap: 6px; }
+    #kelvin-orchestration .kb-task strong { font-size: 12px; }
+    #kelvin-orchestration .kb-events li { position: relative; padding: 11px 0 11px 14px; border-bottom: 0; border-left: 1px solid var(--kb-border); font-size: 12px; }
+    #kelvin-orchestration .kb-events li::before { content: &quot;&quot;; position: absolute; left: -3px; top: 18px; height: 5px; width: 5px; border-radius: 100%; background: var(--kb-secondary); }
+    #kelvin-orchestration .kb-events time { display: block; font-size: 10px; margin-bottom: 2px; }
+    #kelvin-orchestration .kb-definition { font-size: 12px; gap: 10px 12px; }
+    #kelvin-orchestration #kb-agent-detail .kb-definition { grid-template-columns: 1fr; gap: 2px; }
+    #kelvin-orchestration #kb-agent-detail dt { font-size: 10px; letter-spacing: .025em; margin-top: 9px; }
+    #kelvin-orchestration #kb-agent-detail dd { font-size: 12px; }
+    #kelvin-orchestration .kb-stats-strip { display: flex; gap: 0; flex-wrap: wrap; border-bottom: 1px solid var(--kb-border); padding-bottom: 20px; margin: 4px 0 22px; }
+    #kelvin-orchestration .kb-stats-strip &gt; div { padding: 0 24px 0 0; margin-right: 24px; border-right: 1px solid var(--kb-border); }
+    #kelvin-orchestration .kb-stats-strip &gt; div:last-child { border: 0; margin: 0; padding: 0; }
+    #kelvin-orchestration .kb-stats-strip strong { display: block; font-size: 22px; letter-spacing: -.6px; font-weight: 500; font-variant-numeric: tabular-nums; }
+    #kelvin-orchestration .kb-stats-strip small { font-size: 11px; }
+    #kelvin-orchestration .kb-notice { background: var(--kb-amber-bg); padding: 14px 16px; font-size: 12px; }
+    #kelvin-orchestration .kb-value { font-size: 25px; letter-spacing: -.65px; }
+    #kelvin-orchestration .kb-stat-grid { gap: 10px; }
+    #kelvin-orchestration th { font-size: 11px; }
+    #kelvin-orchestration td { font-size: 12px; padding-top: 16px; padding-bottom: 16px; }
+    #kelvin-orchestration input, #kelvin-orchestration select, #kelvin-orchestration textarea { font-size: 12px; padding: 9px 10px; }
+    #kelvin-orchestration textarea { min-height: 116px; font-size: 14px; line-height: 1.6; }
+    #kelvin-orchestration .kb-guide { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; margin-top: 14px; }
+    #kelvin-orchestration .kb-guide label { grid-column: 1 / -1; font-size: 11px; color: var(--kb-secondary); }
+    #kelvin-orchestration .kb-guide button { font-size: 11px; display: flex; align-items: center; gap: 7px; }
+    #kelvin-orchestration .kb-command-panel { margin: 16px 24px 0; padding: 16px; background: var(--kb-panel); border: 1px solid var(--kb-border); border-radius: 10px; box-shadow: 0 10px 40px light-dark(#1e293b12, #00000024); }
+    #kelvin-orchestration .kb-command-panel input { margin-top: 12px; }
+    #kelvin-orchestration .kb-command-results { display: grid; gap: 3px; margin-top: 8px; }
+    #kelvin-orchestration .kb-command-results button { display: flex; justify-content: space-between; text-align: left; background: transparent; border: 0; padding: 10px; }
+    #kelvin-orchestration .kb-command-results button:hover { background: var(--kb-accent-bg); }
+    #kelvin-orchestration .kb-command-results button small { font-size: 11px; }
+    #kelvin-orchestration .kb-inspect-tabs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+    #kelvin-orchestration .kb-inspect-tabs button { font-size: 11px; padding: 6px 8px; background: transparent; border: 1px solid transparent; }
+    #kelvin-orchestration .kb-inspect-tabs button[aria-pressed=&quot;true&quot;] { background: var(--kb-accent-bg); color: var(--kb-accent); }
+    #kelvin-orchestration .kb-inspect-copy { font-size: 12px; overflow-wrap: anywhere; }
+    #kelvin-orchestration .kb-inspect-copy p { margin-bottom: 9px; }
+    #kelvin-orchestration .kb-config-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; padding: 5px 8px; border: 1px solid var(--kb-border); border-radius: 5px; background: var(--kb-panel); }
+    #kelvin-orchestration .kb-config-tag strong { font-weight: 500; color: var(--kb-ink); }
+    #kelvin-orchestration .kb-team-chain { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    #kelvin-orchestration .kb-team-chain span { background: var(--kb-tint); padding: 4px 8px; border-radius: 5px; font-size: 11px; }
+    #kelvin-orchestration .kb-decision-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    #kelvin-orchestration .kb-decision-heading h2 { margin: 0; }
+    #kelvin-orchestration .kb-inline-status { font-size: 11px; color: var(--kb-green); margin-top: 8px; }
+    #kelvin-orchestration .kb-empty { padding: 22px; text-align: center; color: var(--kb-secondary); }
+    #kelvin-orchestration .kb-tight .kb-panel { padding: 12px; }
+    #kelvin-orchestration .kb-tight .kb-task { padding: 8px; }
+    #kelvin-orchestration .kb-tight main { padding: 20px; }
+    #kelvin-orchestration .kb-tight .kb-definition { gap: 6px 10px; }
+    @media (max-width: 850px) {
+      #kelvin-orchestration .kb-shell { grid-template-columns: 148px minmax(0, 1fr); }
+      #kelvin-orchestration .kb-sidebar { padding: 16px 8px; }
+      #kelvin-orchestration .kb-sidebar nav button { font-size: 11px; padding: 9px 7px; gap: 6px; }
+      #kelvin-orchestration main { padding: 22px 18px; }
+      #kelvin-orchestration .kb-columns { grid-template-columns: 1fr; }
+      #kelvin-orchestration #kb-agent-detail .kb-definition { grid-template-columns: auto minmax(0, 1fr); gap: 9px 14px; }
+      #kelvin-orchestration #kb-agent-detail dt { margin-top: 0; }
+      #kelvin-orchestration .kb-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 600px) {
+      #kelvin-orchestration .kb-shell { grid-template-columns: minmax(0, 1fr); }
+      #kelvin-orchestration .kb-sidebar { border-right: 0; border-bottom: 1px solid var(--kb-border); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 14px 12px 8px; }
+      #kelvin-orchestration .kb-new-run { width: auto; padding: 7px 10px; font-size: 12px; }
+      #kelvin-orchestration nav { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 3px; }
+      #kelvin-orchestration .kb-sidebar nav button { padding: 8px 7px; font-size: 11px; }
+      #kelvin-orchestration nav .lucide, #kelvin-orchestration nav i, #kelvin-orchestration .kb-nav-count { display: none; }
+      #kelvin-orchestration .kb-sidebar-section, #kelvin-orchestration .kb-sidebar-footer { display: none; }
+      #kelvin-orchestration .kb-topbar { padding: 9px 12px; font-size: 11px; }
+      #kelvin-orchestration .kb-command-trigger { min-width: 0; }
+      #kelvin-orchestration .kb-command-trigger kbd { display: none; }
+      #kelvin-orchestration main { padding: 20px 12px; }
+      #kelvin-orchestration .kb-command-panel { margin: 12px; }
+      #kelvin-orchestration h1 { font-size: 21px; }
+      #kelvin-orchestration .kb-grid { grid-template-columns: 1fr; }
+      #kelvin-orchestration .kb-stats-strip &gt; div { padding-right: 13px; margin-right: 13px; }
+      #kelvin-orchestration .kb-guide { grid-template-columns: 1fr; }
+      #kelvin-orchestration .kb-guide button { justify-content: center; }
+      #kelvin-orchestration #kb-agent-detail .kb-definition { grid-template-columns: 1fr; gap: 2px; }
+      #kelvin-orchestration #kb-agent-detail dt { margin-top: 7px; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      #kelvin-orchestration button { transition: background-color 120ms ease, border-color 120ms ease; }
+    }
+    @media (pointer: coarse) {
+      #kelvin-orchestration button { min-height: 44px; }
+      #kelvin-orchestration input, #kelvin-orchestration select, #kelvin-orchestration textarea { font-size: 16px; }
+    }
+  &lt;/style&gt;
+  &lt;div class=&quot;kb-preview&quot;&gt;&lt;span&gt;DESIGN PREVIEW&lt;/span&gt; Sample workspace · No external jobs or messages&lt;/div&gt;
+  &lt;div class=&quot;kb-shell&quot;&gt;
+    &lt;aside class=&quot;kb-sidebar&quot; aria-label=&quot;Workspace&quot;&gt;
+      &lt;div class=&quot;kb-workspace-brand&quot;&gt;&lt;span class=&quot;kb-workspace-mark&quot;&gt;K&lt;/span&gt;&lt;div&gt;&lt;strong&gt;Workspace&lt;/strong&gt;&lt;small&gt;Kelvin · Local&lt;/small&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;button type=&quot;button&quot; class=&quot;kb-primary kb-new-run&quot; data-view=&quot;new&quot;&gt;&lt;i data-lucide=&quot;plus&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;New run&lt;/button&gt;
+      &lt;nav aria-label=&quot;Dashboard navigation&quot;&gt;
+        &lt;button type=&quot;button&quot; data-view=&quot;projects&quot;&gt;&lt;i data-lucide=&quot;layers&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;Projects&lt;/button&gt;
+        &lt;button type=&quot;button&quot; data-view=&quot;runs&quot; aria-current=&quot;page&quot;&gt;&lt;i data-lucide=&quot;workflow&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;Runs&lt;span class=&quot;kb-nav-count&quot;&gt;2&lt;/span&gt;&lt;/button&gt;
+        &lt;button type=&quot;button&quot; data-view=&quot;configurations&quot;&gt;&lt;i data-lucide=&quot;sliders-horizontal&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;Configurations&lt;/button&gt;
+        &lt;button type=&quot;button&quot; data-view=&quot;metrics&quot;&gt;&lt;i data-lucide=&quot;chart-no-axes-combined&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;Metrics&lt;/button&gt;
+      &lt;/nav&gt;
+      &lt;div class=&quot;kb-sidebar-section&quot;&gt;&lt;span class=&quot;kb-eyebrow&quot;&gt;PROJECTS&lt;/span&gt;&lt;button type=&quot;button&quot; class=&quot;kb-project-shortcut&quot; data-view=&quot;project&quot;&gt;&lt;span class=&quot;kb-dot&quot;&gt;&lt;/span&gt;Launch controls&lt;/button&gt;&lt;button type=&quot;button&quot; class=&quot;kb-project-shortcut&quot; data-view=&quot;approval&quot;&gt;&lt;span class=&quot;kb-dot kb-dot-amber&quot;&gt;&lt;/span&gt;Search quality&lt;/button&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-sidebar-footer&quot;&gt;&lt;div class=&quot;kb-row&quot;&gt;&lt;i data-lucide=&quot;terminal&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;strong&gt;2 runtimes&lt;/strong&gt;&lt;/div&gt;&lt;small&gt;Claude CLI · Codex CLI&lt;/small&gt;&lt;button type=&quot;button&quot; class=&quot;kb-link&quot; data-view=&quot;configurations&quot;&gt;Manage configurations&lt;/button&gt;&lt;/div&gt;
+    &lt;/aside&gt;
+    &lt;div class=&quot;kb-content&quot;&gt;
+      &lt;div class=&quot;kb-topbar&quot;&gt;&lt;div class=&quot;kb-row&quot;&gt;&lt;span class=&quot;kb-muted&quot;&gt;Workspace&lt;/span&gt;&lt;span class=&quot;kb-muted&quot;&gt;/&lt;/span&gt;&lt;span id=&quot;kb-breadcrumb&quot;&gt;Runs&lt;/span&gt;&lt;/div&gt;&lt;button type=&quot;button&quot; class=&quot;kb-command-trigger&quot; data-action=&quot;commands&quot;&gt;&lt;i data-lucide=&quot;search&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;span&gt;Jump to...&lt;/span&gt;&lt;kbd&gt;⌘ K&lt;/kbd&gt;&lt;/button&gt;&lt;/div&gt;
+      &lt;section class=&quot;kb-command-panel&quot; id=&quot;kb-command-panel&quot; aria-label=&quot;Quick navigation&quot; hidden&gt;
+        &lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;label for=&quot;kb-command-query&quot;&gt;Jump to a page or action&lt;/label&gt;&lt;button type=&quot;button&quot; data-action=&quot;close-commands&quot; aria-label=&quot;Close quick navigation&quot;&gt;&lt;i data-lucide=&quot;x&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/button&gt;&lt;/div&gt;
+        &lt;input id=&quot;kb-command-query&quot; type=&quot;search&quot; placeholder=&quot;Projects, runs, new run, metrics...&quot; autocomplete=&quot;off&quot;&gt;
+        &lt;div id=&quot;kb-command-results&quot; class=&quot;kb-command-results&quot;&gt;&lt;/div&gt;
+      &lt;/section&gt;
+      &lt;div class=&quot;kb-toast&quot; id=&quot;kb-notification&quot; role=&quot;status&quot; hidden&gt;&lt;/div&gt;
+  &lt;main id=&quot;kb-main&quot;&gt;
+    &lt;section data-page=&quot;projects&quot;&gt;
+      &lt;div class=&quot;kb-heading kb-row kb-between&quot;&gt;&lt;div&gt;&lt;h1&gt;Projects&lt;/h1&gt;&lt;span class=&quot;kb-muted&quot;&gt;What is moving, and what needs you.&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;kb-row&quot;&gt;&lt;button type=&quot;button&quot; data-action=&quot;existing-page&quot;&gt;Shipped&lt;/button&gt;&lt;button type=&quot;button&quot; data-action=&quot;existing-page&quot;&gt;Archived&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-stats-strip&quot;&gt;&lt;div&gt;&lt;strong&gt;2&lt;/strong&gt;&lt;small&gt;Active projects&lt;/small&gt;&lt;/div&gt;&lt;div&gt;&lt;strong&gt;1&lt;/strong&gt;&lt;small&gt;Run in progress&lt;/small&gt;&lt;/div&gt;&lt;div&gt;&lt;strong id=&quot;kb-project-decision-count&quot;&gt;1&lt;/strong&gt;&lt;small&gt;Needs your decision&lt;/small&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-notice&quot; id=&quot;kb-project-attention&quot;&gt;&lt;strong&gt;Needs your decision&lt;/strong&gt;&lt;br&gt;Search improvements has a verified POC and ticket package ready. &lt;button class=&quot;kb-link&quot; type=&quot;button&quot; data-view=&quot;approval&quot;&gt;Review go/no-go&lt;/button&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-grid&quot;&gt;
+        &lt;article class=&quot;kb-panel&quot;&gt;
+          &lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;h2&gt;Agent launch controls&lt;/h2&gt;&lt;span class=&quot;kb-badge kb-working&quot;&gt;Implement&lt;/span&gt;&lt;/div&gt;
+          &lt;p class=&quot;kb-muted&quot;&gt;Launch configured agents and inspect their work.&lt;/p&gt;
+          &lt;small&gt;Project progress · 3 of 8 stations complete&lt;/small&gt;&lt;div class=&quot;kb-meter&quot;&gt;&lt;span style=&quot;width:37.5%&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;div&gt;&lt;strong id=&quot;kb-launch-run-summary&quot;&gt;1 active run · 3 agents&lt;/strong&gt;&lt;small&gt;2 tasks running · 1 waiting on a dependency&lt;/small&gt;&lt;/div&gt;&lt;button type=&quot;button&quot; data-view=&quot;project&quot;&gt;Open project&lt;/button&gt;&lt;/div&gt;
+        &lt;/article&gt;
+        &lt;article class=&quot;kb-panel&quot;&gt;
+          &lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;h2&gt;Search improvements&lt;/h2&gt;&lt;span class=&quot;kb-badge kb-waiting&quot; id=&quot;kb-search-project-status&quot;&gt;Needs decision&lt;/span&gt;&lt;/div&gt;
+          &lt;p class=&quot;kb-muted&quot;&gt;Improve search ranking and capture verification evidence.&lt;/p&gt;
+          &lt;small&gt;Project progress · 2 of 8 stations complete&lt;/small&gt;&lt;div class=&quot;kb-meter&quot;&gt;&lt;span style=&quot;width:25%&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;div&gt;&lt;strong id=&quot;kb-search-run-status&quot;&gt;1 waiting run&lt;/strong&gt;&lt;small id=&quot;kb-search-run-next&quot;&gt;Spec &amp;amp; Tickets · Go/no-go package ready&lt;/small&gt;&lt;/div&gt;&lt;button type=&quot;button&quot; data-view=&quot;approval&quot;&gt;Review run&lt;/button&gt;&lt;/div&gt;
+        &lt;/article&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+    &lt;section data-page=&quot;project&quot; hidden&gt;
+      &lt;div class=&quot;kb-heading kb-row kb-between&quot;&gt;&lt;div&gt;&lt;small&gt;Projects / Agent launch controls&lt;/small&gt;&lt;h1&gt;Agent launch controls&lt;/h1&gt;&lt;span class=&quot;kb-badge kb-working&quot;&gt;Implement&lt;/span&gt;&lt;/div&gt;&lt;button type=&quot;button&quot; data-view=&quot;new&quot;&gt;New run for this project&lt;/button&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-columns&quot;&gt;
+        &lt;div class=&quot;kb-stack&quot;&gt;
+          &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Active run&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Implement the launch controls&lt;/strong&gt;&lt;br&gt;&lt;span class=&quot;kb-muted&quot;&gt;Orchestrator: Claude / Opus · high&lt;/span&gt;&lt;/p&gt;&lt;div class=&quot;kb-row&quot;&gt;&lt;span class=&quot;kb-badge kb-working&quot;&gt;Running&lt;/span&gt;&lt;span&gt;3 agents · 18m elapsed&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;&lt;p&gt;Validating the configuration schema while two independent implementation tasks run.&lt;/p&gt;&lt;button type=&quot;button&quot; data-view=&quot;run&quot;&gt;Inspect run and agents&lt;/button&gt;&lt;/div&gt;
+          &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Project stations&lt;/h2&gt;&lt;div class=&quot;kb-stations&quot;&gt;&lt;span&gt;✓ POC&lt;/span&gt;&lt;span&gt;✓ Verify&lt;/span&gt;&lt;span&gt;✓ Spec &amp;amp; Tickets&lt;/span&gt;&lt;span class=&quot;kb-current&quot;&gt;4 · Implement&lt;/span&gt;&lt;span&gt;5 · Converge&lt;/span&gt;&lt;span&gt;6 · Regression&lt;/span&gt;&lt;span&gt;7 · Ship&lt;/span&gt;&lt;span&gt;8 · Cleanup&lt;/span&gt;&lt;/div&gt;&lt;small&gt;Project-level progress stays here. Parallel tasks live inside each run.&lt;/small&gt;&lt;/div&gt;
+          &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Run history&lt;/h2&gt;&lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;span&gt;Verify configuration defaults &lt;small&gt;Completed · 9m · 42k tokens&lt;/small&gt;&lt;/span&gt;&lt;button type=&quot;button&quot; class=&quot;kb-link&quot; data-view=&quot;runs&quot;&gt;All project runs&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;kb-stack&quot;&gt;
+          &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Project context&lt;/h2&gt;&lt;dl class=&quot;kb-definition&quot;&gt;&lt;dt&gt;Repository&lt;/dt&gt;&lt;dd&gt;projects-board&lt;/dd&gt;&lt;dt&gt;PR lanes&lt;/dt&gt;&lt;dd&gt;Schema → Launch controls → Activity view&lt;/dd&gt;&lt;dt&gt;Reviewable&lt;/dt&gt;&lt;dd&gt;Configuration schema&lt;/dd&gt;&lt;/dl&gt;&lt;button type=&quot;button&quot; class=&quot;kb-link&quot; data-action=&quot;existing-page&quot;&gt;Session history&lt;/button&gt;&lt;/div&gt;
+          &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Evidence and artifacts&lt;/h2&gt;&lt;p&gt;Existing plans, PR links, recordings, and tested evidence remain attached to the project.&lt;/p&gt;&lt;button type=&quot;button&quot; data-view=&quot;metrics&quot;&gt;Project metrics&lt;/button&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+    &lt;section data-page=&quot;runs&quot; hidden&gt;
+      &lt;div class=&quot;kb-heading kb-row kb-between&quot;&gt;&lt;div&gt;&lt;h1&gt;Runs&lt;/h1&gt;&lt;span class=&quot;kb-muted&quot;&gt;Every agent. Every task. One place to follow the work.&lt;/span&gt;&lt;/div&gt;&lt;button type=&quot;button&quot; class=&quot;kb-primary&quot; data-view=&quot;new&quot;&gt;New run&lt;/button&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-stats-strip&quot;&gt;&lt;div&gt;&lt;strong id=&quot;kb-running-count&quot;&gt;1&lt;/strong&gt;&lt;small&gt;Running&lt;/small&gt;&lt;/div&gt;&lt;div&gt;&lt;strong id=&quot;kb-waiting-count&quot;&gt;1&lt;/strong&gt;&lt;small&gt;Needs you&lt;/small&gt;&lt;/div&gt;&lt;div&gt;&lt;strong id=&quot;kb-queued-count&quot;&gt;0&lt;/strong&gt;&lt;small&gt;Queued&lt;/small&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-row&quot;&gt;&lt;label&gt;Project&lt;select id=&quot;kb-run-project&quot;&gt;&lt;option value=&quot;all&quot;&gt;All projects&lt;/option&gt;&lt;option value=&quot;launch&quot;&gt;Agent launch controls&lt;/option&gt;&lt;option value=&quot;search&quot;&gt;Search improvements&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;label&gt;Status&lt;select id=&quot;kb-run-status&quot;&gt;&lt;option value=&quot;all&quot;&gt;All statuses&lt;/option&gt;&lt;option value=&quot;running&quot;&gt;Running&lt;/option&gt;&lt;option value=&quot;waiting&quot;&gt;Waiting for you&lt;/option&gt;&lt;option value=&quot;queued&quot;&gt;Queued&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-table-wrap&quot; style=&quot;margin-top:16px&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Run / project&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th&gt;Orchestrator&lt;/th&gt;&lt;th&gt;Agents&lt;/th&gt;&lt;th&gt;Elapsed / tokens&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody id=&quot;kb-runs-body&quot;&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;
+    &lt;/section&gt;
+    &lt;section data-page=&quot;run&quot; hidden&gt;
+      &lt;div class=&quot;kb-heading&quot;&gt;&lt;small&gt;RUN-024 · Agent launch controls&lt;/small&gt;&lt;h1 id=&quot;kb-run-title&quot;&gt;Implement the launch controls&lt;/h1&gt;&lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;div class=&quot;kb-row&quot;&gt;&lt;span class=&quot;kb-badge kb-working&quot;&gt;● Running&lt;/span&gt;&lt;span class=&quot;kb-muted&quot;&gt;18m elapsed · 3 agents · 126k tokens&lt;/span&gt;&lt;/div&gt;&lt;button type=&quot;button&quot; class=&quot;kb-config-tag&quot; data-action=&quot;snapshot&quot;&gt;&lt;i data-lucide=&quot;sliders-horizontal&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;strong&gt;Custom team&lt;/strong&gt;v2&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-panel kb-console&quot;&gt;&lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;div class=&quot;kb-row&quot;&gt;&lt;span class=&quot;kb-avatar&quot;&gt;OR&lt;/span&gt;&lt;div&gt;&lt;h2&gt;Orchestrator&lt;/h2&gt;&lt;small&gt;Claude / Opus · high&lt;/small&gt;&lt;/div&gt;&lt;/div&gt;&lt;span class=&quot;kb-config-tag&quot;&gt;&lt;span class=&quot;kb-dot&quot;&gt;&lt;/span&gt;Updated 4s ago&lt;/span&gt;&lt;/div&gt;&lt;p class=&quot;kb-console-progress&quot;&gt;Two implementation tasks are running independently. The activity view is waiting for the event storage schema.&lt;/p&gt;&lt;small class=&quot;kb-console-next&quot;&gt;&lt;strong&gt;Up next&lt;/strong&gt; · Dispatch Task 14 after Task 13 completes, then verify all results before Converge.&lt;/small&gt;
+        &lt;form id=&quot;kb-guidance-form&quot; class=&quot;kb-guide&quot;&gt;&lt;label for=&quot;kb-guidance&quot;&gt;Guide the orchestrator&lt;/label&gt;&lt;input id=&quot;kb-guidance&quot; placeholder=&quot;Add context or clarify a constraint...&quot; required&gt;&lt;button type=&quot;submit&quot;&gt;&lt;i data-lucide=&quot;arrow-up&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;Send guidance&lt;/button&gt;&lt;/form&gt;&lt;div id=&quot;kb-guidance-status&quot; class=&quot;kb-inline-status&quot; role=&quot;status&quot; hidden&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;kb-stations&quot;&gt;&lt;span&gt;✓ POC&lt;/span&gt;&lt;span&gt;✓ Verify&lt;/span&gt;&lt;span&gt;✓ Spec &amp;amp; Tickets&lt;/span&gt;&lt;span class=&quot;kb-current&quot;&gt;Implement&lt;/span&gt;&lt;span&gt;Converge&lt;/span&gt;&lt;span&gt;Regression&lt;/span&gt;&lt;span&gt;Ship&lt;/span&gt;&lt;span&gt;Cleanup&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-columns&quot;&gt;
+        &lt;div class=&quot;kb-stack&quot;&gt;
+          &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Tasks and assignments&lt;/h2&gt;
+            &lt;button type=&quot;button&quot; class=&quot;kb-task&quot; data-agent=&quot;launch&quot; aria-pressed=&quot;true&quot;&gt;&lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;strong&gt;Task 12 · Launch form&lt;/strong&gt;&lt;span class=&quot;kb-badge kb-working&quot;&gt;Running&lt;/span&gt;&lt;/div&gt;&lt;small&gt;Implementer 1 · Claude / Opus · high&lt;/small&gt;&lt;small&gt;Action: editing form validation · Worktree: ticket-12&lt;/small&gt;&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;kb-task&quot; data-agent=&quot;events&quot; aria-pressed=&quot;false&quot;&gt;&lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;strong&gt;Task 13 · Event storage&lt;/strong&gt;&lt;span class=&quot;kb-badge kb-working&quot;&gt;Running&lt;/span&gt;&lt;/div&gt;&lt;small&gt;Implementer 2 · Codex / runtime default · high&lt;/small&gt;&lt;small&gt;Action: running persistence tests · Worktree: ticket-13&lt;/small&gt;&lt;/button&gt;
+            &lt;button type=&quot;button&quot; class=&quot;kb-task&quot; data-agent=&quot;activity&quot; aria-pressed=&quot;false&quot;&gt;&lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;strong&gt;Task 14 · Activity view&lt;/strong&gt;&lt;span class=&quot;kb-badge kb-waiting&quot;&gt;Waiting&lt;/span&gt;&lt;/div&gt;&lt;small&gt;Depends on Task 13 · No agent assigned yet&lt;/small&gt;&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;kb-panel&quot;&gt;&lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;h2&gt;Activity&lt;/h2&gt;&lt;small&gt;Most recent first&lt;/small&gt;&lt;/div&gt;&lt;ol class=&quot;kb-events&quot; id=&quot;kb-activity-events&quot;&gt;&lt;li&gt;&lt;time&gt;14:32:04&lt;/time&gt;Implementer 2 started persistence tests.&lt;/li&gt;&lt;li&gt;&lt;time&gt;14:31:58&lt;/time&gt;Orchestrator confirmed Task 14 depends on Task 13.&lt;/li&gt;&lt;li&gt;&lt;time&gt;14:31:41&lt;/time&gt;Implementer 1 updated form validation.&lt;/li&gt;&lt;li&gt;&lt;time&gt;14:30:19&lt;/time&gt;Orchestrator dispatched two independent tasks.&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;aside class=&quot;kb-stack&quot;&gt;
+          &lt;div class=&quot;kb-panel&quot; id=&quot;kb-agent-detail&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+          &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Run context&lt;/h2&gt;&lt;div class=&quot;kb-inspect-tabs&quot; aria-label=&quot;Run context views&quot;&gt;&lt;button type=&quot;button&quot; data-inspect=&quot;decision&quot; aria-pressed=&quot;true&quot;&gt;Decisions&lt;/button&gt;&lt;button type=&quot;button&quot; data-inspect=&quot;artifacts&quot; aria-pressed=&quot;false&quot;&gt;Evidence&lt;/button&gt;&lt;button type=&quot;button&quot; data-inspect=&quot;output&quot; aria-pressed=&quot;false&quot;&gt;Output&lt;/button&gt;&lt;/div&gt;&lt;div class=&quot;kb-inspect-copy&quot; id=&quot;kb-inspect-content&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;/aside&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+    &lt;section data-page=&quot;approval&quot; hidden&gt;
+      &lt;div class=&quot;kb-heading&quot;&gt;&lt;small&gt;RUN-023 · Search improvements&lt;/small&gt;&lt;h1 id=&quot;kb-decision-title&quot;&gt;Ready for your decision&lt;/h1&gt;&lt;span class=&quot;kb-badge kb-waiting&quot; id=&quot;kb-approval-status&quot;&gt;Waiting for go/no-go&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-columns&quot;&gt;
+        &lt;div class=&quot;kb-panel&quot;&gt;&lt;div class=&quot;kb-decision-heading&quot;&gt;&lt;span class=&quot;kb-avatar&quot;&gt;&lt;i data-lucide=&quot;git-pull-request&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;h2&gt;Spec &amp;amp; Tickets checkpoint&lt;/h2&gt;&lt;/div&gt;&lt;p&gt;The POC has been verified. The proposed implementation is split into three dependency-aware tickets.&lt;/p&gt;&lt;dl class=&quot;kb-definition&quot;&gt;&lt;dt&gt;Evidence&lt;/dt&gt;&lt;dd&gt;Recorded scenario and targeted checks&lt;/dd&gt;&lt;dt&gt;Spec&lt;/dt&gt;&lt;dd&gt;Search behavior and acceptance criteria&lt;/dd&gt;&lt;dt&gt;Ticket package&lt;/dt&gt;&lt;dd&gt;Ranking module → integration → regression coverage&lt;/dd&gt;&lt;dt&gt;Independent review&lt;/dt&gt;&lt;dd&gt;Ticket structure assessed; findings resolved&lt;/dd&gt;&lt;dt&gt;Decision scope&lt;/dt&gt;&lt;dd&gt;Publish the reviewed tickets and begin implementation&lt;/dd&gt;&lt;/dl&gt;&lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;kb-row&quot; id=&quot;kb-approval-actions&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;kb-primary&quot; data-action=&quot;approve&quot;&gt;Approve and continue&lt;/button&gt;&lt;button type=&quot;button&quot; data-action=&quot;changes&quot;&gt;Request changes&lt;/button&gt;&lt;/div&gt;&lt;form id=&quot;kb-changes-form&quot; class=&quot;kb-stack&quot; style=&quot;margin-top:14px&quot; hidden&gt;&lt;label&gt;What should change?&lt;textarea id=&quot;kb-changes-input&quot; required placeholder=&quot;Describe the change to the reviewed package...&quot;&gt;&lt;/textarea&gt;&lt;/label&gt;&lt;button type=&quot;submit&quot;&gt;Send requested changes&lt;/button&gt;&lt;/form&gt;&lt;div id=&quot;kb-decision-result&quot; class=&quot;kb-inline-status&quot; role=&quot;status&quot; hidden&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Run status&lt;/h2&gt;&lt;p id=&quot;kb-decision-summary&quot;&gt;Human decision required&lt;/p&gt;&lt;small&gt;Agents have completed the checkpoint package. Waiting time is tracked separately from active work.&lt;/small&gt;&lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;&lt;p&gt;Approval belongs to this run and this exact package. A saved preset cannot approve future work.&lt;/p&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+    &lt;section data-page=&quot;new&quot; hidden&gt;
+      &lt;div class=&quot;kb-heading&quot;&gt;&lt;h1&gt;New run&lt;/h1&gt;&lt;span class=&quot;kb-muted&quot;&gt;Describe the work, choose a team, and inspect the effective configuration.&lt;/span&gt;&lt;/div&gt;
+      &lt;form id=&quot;kb-launch-form&quot; class=&quot;kb-stack&quot;&gt;
+        &lt;div class=&quot;kb-panel kb-stack&quot;&gt;&lt;label&gt;What should the orchestrator do?&lt;textarea id=&quot;kb-prompt&quot; required placeholder=&quot;Describe the outcome you want. Add constraints, references, or a ticket...&quot;&gt;&lt;/textarea&gt;&lt;/label&gt;&lt;div class=&quot;kb-grid&quot;&gt;&lt;label&gt;Project&lt;select id=&quot;kb-project&quot;&gt;&lt;option&gt;Agent launch controls&lt;/option&gt;&lt;option&gt;Search improvements&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;label&gt;Configuration&lt;select id=&quot;kb-preset&quot;&gt;&lt;option&gt;Skill defaults&lt;/option&gt;&lt;option&gt;Custom team&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;/div&gt;&lt;label&gt;Repository / working directory&lt;input id=&quot;kb-directory&quot; value=&quot;~/.claude/projects-board&quot; required&gt;&lt;/label&gt;&lt;div class=&quot;kb-row&quot;&gt;&lt;span class=&quot;kb-config-tag&quot;&gt;&lt;i data-lucide=&quot;workflow&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;kelvin-implement&lt;/span&gt;&lt;span class=&quot;kb-config-tag&quot;&gt;&lt;i data-lucide=&quot;git-branch&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;Isolated worktrees&lt;/span&gt;&lt;small&gt;Draft retained while navigating&lt;/small&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Orchestrator&lt;/h2&gt;&lt;div class=&quot;kb-fields&quot;&gt;&lt;label&gt;Runtime&lt;select id=&quot;kb-runtime&quot;&gt;&lt;option&gt;Claude&lt;/option&gt;&lt;option&gt;Codex&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;label&gt;Model&lt;select id=&quot;kb-model&quot;&gt;&lt;option&gt;Opus&lt;/option&gt;&lt;option&gt;Runtime default&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;label&gt;Effort&lt;select id=&quot;kb-effort&quot;&gt;&lt;option&gt;Inherit runtime setting&lt;/option&gt;&lt;option selected&gt;high&lt;/option&gt;&lt;option&gt;medium&lt;/option&gt;&lt;option&gt;low&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;/div&gt;
+          &lt;details&gt;&lt;summary&gt;Role overrides and execution limits&lt;/summary&gt;&lt;div class=&quot;kb-table-wrap&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Role&lt;/th&gt;&lt;th&gt;Runtime / model&lt;/th&gt;&lt;th&gt;Effort&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody id=&quot;kb-launch-roles&quot;&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;div class=&quot;kb-grid&quot; style=&quot;margin-top:16px&quot;&gt;&lt;label&gt;Maximum active workers&lt;input id=&quot;kb-workers&quot; type=&quot;number&quot; min=&quot;1&quot; max=&quot;16&quot; value=&quot;3&quot;&gt;&lt;/label&gt;&lt;label&gt;Token budget (optional)&lt;input id=&quot;kb-budget&quot; type=&quot;number&quot; min=&quot;1&quot; placeholder=&quot;No limit configured&quot;&gt;&lt;/label&gt;&lt;/div&gt;&lt;/details&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Ready to launch&lt;/h2&gt;&lt;p id=&quot;kb-resolved&quot;&gt;&lt;/p&gt;&lt;small&gt;Preview inventory: Claude and Codex CLIs. The app will validate model access, effort settings, and role dispatch before a real launch.&lt;/small&gt;&lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;span class=&quot;kb-muted&quot;&gt;Go/no-go checkpoint retained&lt;/span&gt;&lt;button type=&quot;submit&quot; class=&quot;kb-primary&quot;&gt;Queue preview run&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/section&gt;
+    &lt;section data-page=&quot;queued&quot; hidden&gt;
+      &lt;div class=&quot;kb-heading&quot;&gt;&lt;small&gt;PREVIEW RUN&lt;/small&gt;&lt;h1 id=&quot;kb-queued-title&quot;&gt;Run queued&lt;/h1&gt;&lt;span class=&quot;kb-badge&quot; id=&quot;kb-queued-status&quot;&gt;Queued&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Configuration captured&lt;/h2&gt;&lt;div id=&quot;kb-queued-snapshot&quot;&gt;&lt;/div&gt;&lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;&lt;small&gt;This is a local preview record. No runtime process has started.&lt;/small&gt;&lt;div class=&quot;kb-row&quot; style=&quot;margin-top:16px&quot;&gt;&lt;button type=&quot;button&quot; data-view=&quot;runs&quot;&gt;View all runs&lt;/button&gt;&lt;button type=&quot;button&quot; data-view=&quot;new&quot;&gt;Configure another run&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;/section&gt;
+    &lt;section data-page=&quot;configurations&quot; hidden&gt;
+      &lt;div class=&quot;kb-heading&quot;&gt;&lt;h1&gt;Configurations&lt;/h1&gt;&lt;span class=&quot;kb-muted&quot;&gt;Reusable teams, role assignments, and execution defaults.&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-columns&quot;&gt;
+        &lt;div class=&quot;kb-panel&quot;&gt;&lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;h2&gt;Skill defaults&lt;/h2&gt;&lt;span class=&quot;kb-badge&quot;&gt;Version 1&lt;/span&gt;&lt;/div&gt;&lt;p class=&quot;kb-muted&quot;&gt;Preserves the current kelvin-implement model choices.&lt;/p&gt;&lt;dl class=&quot;kb-definition&quot;&gt;&lt;dt&gt;Orchestrator&lt;/dt&gt;&lt;dd&gt;Chosen at launch&lt;/dd&gt;&lt;dt&gt;Implementer&lt;/dt&gt;&lt;dd&gt;Claude / Opus / inherited effort&lt;/dd&gt;&lt;dt&gt;PR and fix author&lt;/dt&gt;&lt;dd&gt;Claude / Opus / inherited effort&lt;/dd&gt;&lt;dt&gt;Independent adjudicator&lt;/dt&gt;&lt;dd&gt;Codex / configured default&lt;/dd&gt;&lt;dt&gt;Other roles&lt;/dt&gt;&lt;dd&gt;Inherit orchestrator unless overridden&lt;/dd&gt;&lt;dt&gt;Go/no-go&lt;/dt&gt;&lt;dd&gt;Required after the verified POC and ticket package&lt;/dd&gt;&lt;/dl&gt;&lt;div class=&quot;kb-row&quot;&gt;&lt;button type=&quot;button&quot; data-action=&quot;use-preset&quot;&gt;Use configuration&lt;/button&gt;&lt;button type=&quot;button&quot; data-action=&quot;custom&quot;&gt;Duplicate and customize&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Runtimes&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Claude CLI&lt;/strong&gt;&lt;small&gt;Installed · Authentication and model access checked at launch&lt;/small&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Codex CLI&lt;/strong&gt;&lt;small&gt;Installed · Authentication and model access checked at launch&lt;/small&gt;&lt;/p&gt;&lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;&lt;h3&gt;Per-run record&lt;/h3&gt;&lt;p&gt;Each run keeps its resolved model, effort, role assignments, skill version, and execution limits.&lt;/p&gt;&lt;small&gt;Editing this configuration affects future launches.&lt;/small&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;kb-panel&quot; style=&quot;margin-top:18px&quot;&gt;&lt;h2&gt;Workflow roles&lt;/h2&gt;&lt;div class=&quot;kb-table-wrap&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Role&lt;/th&gt;&lt;th&gt;Owns&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Orchestrator&lt;/td&gt;&lt;td&gt;Plan, dependencies, delegation, synthesis, and phase transitions&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Researcher / POC builder&lt;/td&gt;&lt;td&gt;Explore the code and prove the approach&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Spec and ticket planner&lt;/td&gt;&lt;td&gt;Acceptance criteria and implementation slices&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Implementer&lt;/td&gt;&lt;td&gt;One ready ticket in its own worktree&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Verifier&lt;/td&gt;&lt;td&gt;Checks, live behavior, and evidence&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Reviewer&lt;/td&gt;&lt;td&gt;Standards, spec conformance, and review findings&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Independent adjudicator&lt;/td&gt;&lt;td&gt;Read-only second opinion on plans and findings&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;PR / fix author&lt;/td&gt;&lt;td&gt;Draft PRs and execute fixes decided by the orchestrator&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;/section&gt;
+    &lt;section data-page=&quot;metrics&quot; hidden&gt;
+      &lt;div class=&quot;kb-heading kb-row kb-between&quot;&gt;&lt;div&gt;&lt;h1&gt;Metrics&lt;/h1&gt;&lt;span class=&quot;kb-muted&quot;&gt;Where work, waiting, and tokens go.&lt;/span&gt;&lt;/div&gt;&lt;label&gt;Project&lt;select id=&quot;kb-metrics-project&quot;&gt;&lt;option value=&quot;all&quot;&gt;All projects&lt;/option&gt;&lt;option value=&quot;launch&quot;&gt;Agent launch controls&lt;/option&gt;&lt;/select&gt;&lt;/label&gt;&lt;/div&gt;
+      &lt;small&gt;Illustrative last 30 days · Finished runs only · Token telemetry coverage: 100% of this sample&lt;/small&gt;
+      &lt;div class=&quot;kb-stat-grid&quot;&gt;&lt;div class=&quot;kb-panel&quot;&gt;&lt;small&gt;Completed / finished&lt;/small&gt;&lt;div class=&quot;kb-value&quot; id=&quot;kb-completed&quot;&gt;19 / 24&lt;/div&gt;&lt;small id=&quot;kb-success&quot;&gt;79.2% success&lt;/small&gt;&lt;/div&gt;&lt;div class=&quot;kb-panel&quot;&gt;&lt;small&gt;Median active time&lt;/small&gt;&lt;div class=&quot;kb-value&quot; id=&quot;kb-duration&quot;&gt;21m&lt;/div&gt;&lt;small&gt;Waiting excluded&lt;/small&gt;&lt;/div&gt;&lt;div class=&quot;kb-panel&quot;&gt;&lt;small&gt;Token usage&lt;/small&gt;&lt;div class=&quot;kb-value&quot; id=&quot;kb-tokens&quot;&gt;2.40M&lt;/div&gt;&lt;small&gt;Input and output combined&lt;/small&gt;&lt;/div&gt;&lt;div class=&quot;kb-panel&quot;&gt;&lt;small&gt;Estimated cost&lt;/small&gt;&lt;div class=&quot;kb-value&quot;&gt;Unknown&lt;/div&gt;&lt;small&gt;Price data required&lt;/small&gt;&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;kb-grid&quot;&gt;
+        &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Token usage by role&lt;/h2&gt;&lt;div id=&quot;kb-role-metrics&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;kb-panel&quot;&gt;&lt;h2&gt;Time and outcomes&lt;/h2&gt;&lt;dl class=&quot;kb-definition&quot; id=&quot;kb-time-metrics&quot;&gt;&lt;/dl&gt;&lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;&lt;small&gt;Drill down by project, run, model, configuration, role, or workflow phase. Model comparisons should include task type and success rate.&lt;/small&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;script&gt;
+    (function () {
+      const root = document.getElementById(&#x27;kelvin-orchestration&#x27;);
+      const state = { page: &#x27;run&#x27;, density: &#x27;Comfortable&#x27;, accent: &#x27;Indigo&#x27;, inspector: &#x27;decision&#x27; };
+      let previewSequence = 25;
+      let commandReturnFocus = null;
+      const roleNames = [&#x27;Researcher / POC builder&#x27;, &#x27;Spec and ticket planner&#x27;, &#x27;Implementer&#x27;, &#x27;Verifier&#x27;, &#x27;Reviewer&#x27;, &#x27;Independent adjudicator&#x27;, &#x27;PR / fix author&#x27;];
+      const agents = {
+        launch: { name: &#x27;Implementer 1&#x27;, status: &#x27;Running&#x27;, role: &#x27;Implementer&#x27;, runtime: &#x27;Claude / Opus&#x27;, effort: &#x27;high (inherited)&#x27;, task: &#x27;Task 12 · Launch form&#x27;, action: &#x27;Editing form validation&#x27;, elapsed: &#x27;11m active&#x27;, tokens: &#x27;41,200&#x27;, worktree: &#x27;ticket-12&#x27;, event: &#x27;4s ago&#x27; },
+        events: { name: &#x27;Implementer 2&#x27;, status: &#x27;Running&#x27;, role: &#x27;Implementer&#x27;, runtime: &#x27;Codex / runtime default&#x27;, effort: &#x27;high (override)&#x27;, task: &#x27;Task 13 · Event storage&#x27;, action: &#x27;Running persistence tests&#x27;, elapsed: &#x27;9m active&#x27;, tokens: &#x27;52,100&#x27;, worktree: &#x27;ticket-13&#x27;, event: &#x27;7s ago&#x27; },
+        activity: { name: &#x27;Task 14&#x27;, status: &#x27;Waiting on dependency&#x27;, role: &#x27;Implementer&#x27;, runtime: &#x27;Not assigned&#x27;, effort: &#x27;From configuration at dispatch&#x27;, task: &#x27;Activity view&#x27;, action: &#x27;Waiting for Task 13 to complete&#x27;, elapsed: &#x27;0m active · 8m waiting&#x27;, tokens: &#x27;No usage yet&#x27;, worktree: &#x27;Not created&#x27;, event: &#x27;Dependency confirmed 6s ago&#x27; }
+      };
+      const runs = [
+        { title: &#x27;Implement the launch controls&#x27;, project: &#x27;Agent launch controls&#x27;, key: &#x27;launch&#x27;, status: &#x27;running&#x27;, label: &#x27;Running&#x27;, runtime: &#x27;Claude / Opus&#x27;, agents: &#x27;3&#x27;, duration: &#x27;18m / 126k&#x27;, page: &#x27;run&#x27; },
+        { title: &#x27;Verify search and prepare tickets&#x27;, project: &#x27;Search improvements&#x27;, key: &#x27;search&#x27;, status: &#x27;waiting&#x27;, label: &#x27;Waiting for you&#x27;, runtime: &#x27;Codex / runtime default&#x27;, agents: &#x27;1&#x27;, duration: &#x27;42m / 82k&#x27;, page: &#x27;approval&#x27; }
+      ];
+      const commandItems = [
+        { label: &#x27;New run&#x27;, page: &#x27;new&#x27;, detail: &#x27;Launch with a configuration&#x27; },
+        { label: &#x27;Projects&#x27;, page: &#x27;projects&#x27;, detail: &#x27;Progress and needs action&#x27; },
+        { label: &#x27;Runs&#x27;, page: &#x27;runs&#x27;, detail: &#x27;All execution&#x27; },
+        { label: &#x27;Inspect active run&#x27;, page: &#x27;run&#x27;, detail: &#x27;Tasks and agents&#x27; },
+        { label: &#x27;Agent launch controls&#x27;, page: &#x27;project&#x27;, detail: &#x27;Project&#x27; },
+        { label: &#x27;Review decision&#x27;, page: &#x27;approval&#x27;, detail: &#x27;Search improvements&#x27; },
+        { label: &#x27;Configurations&#x27;, page: &#x27;configurations&#x27;, detail: &#x27;Models, effort, and roles&#x27; },
+        { label: &#x27;Metrics&#x27;, page: &#x27;metrics&#x27;, detail: &#x27;Usage and outcomes&#x27; }
+      ];
+      function escapeText(value) { return String(value).replace(/[&amp;&lt;&gt;&quot;&#x27;]/g, function (c) { return { &#x27;&amp;&#x27;: &#x27;&amp;amp;&#x27;, &#x27;&lt;&#x27;: &#x27;&amp;lt;&#x27;, &#x27;&gt;&#x27;: &#x27;&amp;gt;&#x27;, &#x27;&quot;&#x27;: &#x27;&amp;quot;&#x27;, &quot;&#x27;&quot;: &#x27;&amp;#39;&#x27; }[c]; }); }
+      function notify(text) { const node = root.querySelector(&#x27;#kb-notification&#x27;); node.textContent = text; node.hidden = false; }
+      function navigate(page) {
+        if (state.page === &#x27;project&#x27;) {
+          if (page === &#x27;new&#x27;) root.querySelector(&#x27;#kb-project&#x27;).value = &#x27;Agent launch controls&#x27;;
+          if (page === &#x27;metrics&#x27;) { root.querySelector(&#x27;#kb-metrics-project&#x27;).value = &#x27;launch&#x27;; renderMetrics(); }
+          if (page === &#x27;runs&#x27;) { root.querySelector(&#x27;#kb-run-project&#x27;).value = &#x27;launch&#x27;; root.querySelector(&#x27;#kb-run-status&#x27;).value = &#x27;all&#x27;; renderRuns(); }
+        }
+        state.page = page;
+        root.querySelectorAll(&#x27;[data-page]&#x27;).forEach(function (node) { node.hidden = node.dataset.page !== page; });
+        const selected = [&#x27;project&#x27;].includes(page) ? &#x27;projects&#x27; : [&#x27;run&#x27;, &#x27;approval&#x27;, &#x27;new&#x27;, &#x27;queued&#x27;].includes(page) ? &#x27;runs&#x27; : page;
+        root.querySelectorAll(&#x27;nav [data-view]&#x27;).forEach(function (node) { if (node.dataset.view === selected) node.setAttribute(&#x27;aria-current&#x27;, &#x27;page&#x27;); else node.removeAttribute(&#x27;aria-current&#x27;); });
+        root.querySelector(&#x27;#kb-breadcrumb&#x27;).textContent = { projects: &#x27;Projects&#x27;, project: &#x27;Projects / Launch controls&#x27;, runs: &#x27;Runs&#x27;, run: &#x27;Runs / RUN-024&#x27;, approval: &#x27;Runs / Decision&#x27;, new: &#x27;Runs / New run&#x27;, queued: &#x27;Runs / Preview&#x27;, configurations: &#x27;Configurations&#x27;, metrics: &#x27;Metrics&#x27; }[page] || &#x27;Workspace&#x27;;
+        root.querySelector(&#x27;#kb-command-panel&#x27;).hidden = true;
+        root.querySelector(&#x27;#kb-notification&#x27;).hidden = true;
+      }
+      function renderCommands() {
+        const query = root.querySelector(&#x27;#kb-command-query&#x27;).value.trim().toLowerCase();
+        const matches = commandItems.filter(function (item) { return (item.label + &#x27; &#x27; + item.detail).toLowerCase().includes(query); });
+        root.querySelector(&#x27;#kb-command-results&#x27;).innerHTML = matches.map(function (item) { return &#x27;&lt;button type=&quot;button&quot; data-command-page=&quot;&#x27; + item.page + &#x27;&quot;&gt;&lt;span&gt;&#x27; + item.label + &#x27;&lt;/span&gt;&lt;small&gt;&#x27; + item.detail + &#x27;&lt;/small&gt;&lt;/button&gt;&#x27;; }).join(&#x27;&#x27;) || &#x27;&lt;p class=&quot;kb-empty&quot; role=&quot;status&quot;&gt;No matching actions&lt;/p&gt;&#x27;;
+      }
+      function openCommands() {
+        if (!root.querySelector(&#x27;#kb-command-panel&#x27;).hidden) { closeCommands(); return; }
+        commandReturnFocus = document.activeElement;
+        root.querySelector(&#x27;#kb-command-panel&#x27;).hidden = false;
+        root.querySelector(&#x27;#kb-command-query&#x27;).value = &#x27;&#x27;;
+        renderCommands();
+        root.querySelector(&#x27;#kb-command-query&#x27;).focus();
+      }
+      function closeCommands() {
+        root.querySelector(&#x27;#kb-command-panel&#x27;).hidden = true;
+        if (commandReturnFocus &amp;&amp; root.contains(commandReturnFocus)) commandReturnFocus.focus();
+      }
+      function renderInspector(kind) {
+        state.inspector = kind;
+        root.querySelectorAll(&#x27;[data-inspect]&#x27;).forEach(function (node) { node.setAttribute(&#x27;aria-pressed&#x27;, String(node.dataset.inspect === kind)); });
+        const content = {
+          decision: &#x27;&lt;p&gt;&lt;strong&gt;Parallelize Tasks 12 and 13&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;They touch separate modules and can be verified independently.&lt;/p&gt;&lt;small&gt;Orchestrator · 14:30:19&lt;/small&gt;&lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Task 14 waits for Task 13&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;The activity view consumes the event schema. Dispatch after the schema checks pass.&lt;/p&gt;&lt;small&gt;Orchestrator · 14:31:58&lt;/small&gt;&#x27;,
+          artifacts: &#x27;&lt;p&gt;&lt;strong&gt;Configuration schema&lt;/strong&gt;&lt;small&gt;Diff · Task 13 · 2 files&lt;/small&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Persistence checks&lt;/strong&gt;&lt;small&gt;Test output · 8 passed in sample&lt;/small&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Verified POC&lt;/strong&gt;&lt;small&gt;Recording · Linked to project evidence&lt;/small&gt;&lt;/p&gt;&lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;&lt;small&gt;Artifacts retain task, attempt, and repository revision.&lt;/small&gt;&#x27;,
+          output: &#x27;&lt;p&gt;&lt;strong&gt;Latest normalized events&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;code&gt;14:32:04 check.started&lt;/code&gt;&lt;small&gt;Task 13 · Implementer 2&lt;/small&gt;&lt;/p&gt;&lt;p&gt;&lt;code&gt;14:31:58 dependency.confirmed&lt;/code&gt;&lt;small&gt;Task 14 → Task 13&lt;/small&gt;&lt;/p&gt;&lt;p&gt;&lt;code&gt;14:31:41 artifact.updated&lt;/code&gt;&lt;small&gt;Task 12 · Form validation&lt;/small&gt;&lt;/p&gt;&lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;&lt;small&gt;Sample events. Full raw provider output belongs in the runtime event store.&lt;/small&gt;&#x27;,
+          snapshot: &#x27;&lt;p&gt;&lt;strong&gt;Custom team · version 2&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Orchestrator: Claude / Opus / high&lt;/p&gt;&lt;p&gt;Task 13 override: Codex / runtime default / high&lt;/p&gt;&lt;p&gt;Other implementers: Claude / Opus / inherited effort&lt;/p&gt;&lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;&lt;small&gt;Requested configuration shown. Actual model IDs, CLI versions, and skill hash are recorded by the real runner.&lt;/small&gt;&#x27;
+        };
+        root.querySelector(&#x27;#kb-inspect-content&#x27;).innerHTML = content[kind];
+      }
+      function renderAgent(key) {
+        const a = agents[key];
+        root.querySelectorAll(&#x27;[data-agent]&#x27;).forEach(function (node) { node.setAttribute(&#x27;aria-pressed&#x27;, String(node.dataset.agent === key)); });
+        const fields = [[&#x27;Role&#x27;, a.role], [&#x27;Runtime / model&#x27;, a.runtime], [&#x27;Effort&#x27;, a.effort], [&#x27;Task&#x27;, a.task], [&#x27;Current action&#x27;, a.action], [&#x27;Time&#x27;, a.elapsed], [&#x27;Tokens&#x27;, a.tokens], [&#x27;Worktree&#x27;, a.worktree], [&#x27;Last activity&#x27;, a.event]];
+        root.querySelector(&#x27;#kb-agent-detail&#x27;).innerHTML = &#x27;&lt;h2&gt;&#x27; + a.name + &#x27;&lt;/h2&gt;&lt;span class=&quot;kb-badge &#x27; + (key === &#x27;activity&#x27; ? &#x27;kb-waiting&#x27; : &#x27;kb-working&#x27;) + &#x27;&quot;&gt;&#x27; + a.status + &#x27;&lt;/span&gt;&lt;dl class=&quot;kb-definition&quot;&gt;&#x27; + fields.map(function (f) { return &#x27;&lt;dt&gt;&#x27; + f[0] + &#x27;&lt;/dt&gt;&lt;dd&gt;&#x27; + f[1] + &#x27;&lt;/dd&gt;&#x27;; }).join(&#x27;&#x27;) + &#x27;&lt;/dl&gt;&#x27;;
+      }
+      function renderRuns() {
+        const project = root.querySelector(&#x27;#kb-run-project&#x27;).value;
+        const status = root.querySelector(&#x27;#kb-run-status&#x27;).value;
+        const filtered = runs.filter(function (r) { return (project === &#x27;all&#x27; || r.key === project) &amp;&amp; (status === &#x27;all&#x27; || r.status === status); });
+        root.querySelector(&#x27;#kb-runs-body&#x27;).innerHTML = filtered.map(function (r) { return &#x27;&lt;tr&gt;&lt;td&gt;&lt;button type=&quot;button&quot; class=&quot;kb-link&quot; data-view=&quot;&#x27; + r.page + &#x27;&quot;&#x27; + (r.previewId ? &#x27; data-preview-id=&quot;&#x27; + r.previewId + &#x27;&quot;&#x27; : &#x27;&#x27;) + &#x27;&gt;&#x27; + escapeText(r.title) + &#x27;&lt;/button&gt;&lt;small&gt;&#x27; + escapeText(r.project) + &#x27;&lt;/small&gt;&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;kb-badge &#x27; + (r.status === &#x27;running&#x27; ? &#x27;kb-working&#x27; : r.status === &#x27;waiting&#x27; ? &#x27;kb-waiting&#x27; : &#x27;&#x27;) + &#x27;&quot;&gt;&#x27; + r.label + &#x27;&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&#x27; + escapeText(r.runtime) + &#x27;&lt;/td&gt;&lt;td&gt;&#x27; + r.agents + &#x27;&lt;/td&gt;&lt;td&gt;&#x27; + r.duration + &#x27;&lt;/td&gt;&lt;/tr&gt;&#x27;; }).join(&#x27;&#x27;) || &#x27;&lt;tr&gt;&lt;td colspan=&quot;5&quot; class=&quot;kb-empty&quot;&gt;No runs match these filters.&lt;/td&gt;&lt;/tr&gt;&#x27;;
+        const waiting = runs.filter(function (r) { return r.status === &#x27;waiting&#x27;; }).length;
+        root.querySelector(&#x27;#kb-running-count&#x27;).textContent = String(runs.filter(function (r) { return r.status === &#x27;running&#x27;; }).length);
+        root.querySelector(&#x27;#kb-waiting-count&#x27;).textContent = String(waiting);
+        root.querySelector(&#x27;#kb-queued-count&#x27;).textContent = String(runs.filter(function (r) { return r.status === &#x27;queued&#x27;; }).length);
+        root.querySelector(&#x27;#kb-project-decision-count&#x27;).textContent = String(waiting);
+        root.querySelector(&#x27;#kb-project-attention&#x27;).hidden = waiting === 0;
+        root.querySelector(&#x27;.kb-nav-count&#x27;).textContent = String(runs.length);
+        const launchQueued = runs.filter(function (r) { return r.key === &#x27;launch&#x27; &amp;&amp; r.status === &#x27;queued&#x27;; }).length;
+        root.querySelector(&#x27;#kb-launch-run-summary&#x27;).textContent = launchQueued ? &#x27;1 running · &#x27; + launchQueued + &#x27; queued&#x27; : &#x27;1 active run · 3 agents&#x27;;
+        const searchRuns = runs.filter(function (r) { return r.key === &#x27;search&#x27;; });
+        const searchWaiting = searchRuns.filter(function (r) { return r.status === &#x27;waiting&#x27;; }).length;
+        const searchQueued = searchRuns.filter(function (r) { return r.status === &#x27;queued&#x27;; }).length;
+        root.querySelector(&#x27;#kb-search-run-status&#x27;).textContent = [searchWaiting ? searchWaiting + &#x27; waiting&#x27; : &#x27;&#x27;, searchQueued ? searchQueued + &#x27; queued&#x27; : &#x27;&#x27;].filter(Boolean).join(&#x27; · &#x27;) + &#x27; run&#x27; + (searchRuns.length === 1 ? &#x27;&#x27; : &#x27;s&#x27;);
+      }
+      function showPreviewRun(run) {
+        root.querySelector(&#x27;#kb-queued-title&#x27;).textContent = run.title;
+        const snapshot = run.snapshot;
+        root.querySelector(&#x27;#kb-queued-snapshot&#x27;).innerHTML = &#x27;&lt;dl class=&quot;kb-definition&quot;&gt;&lt;dt&gt;Project&lt;/dt&gt;&lt;dd&gt;&#x27; + escapeText(run.project) + &#x27;&lt;/dd&gt;&lt;dt&gt;Orchestrator&lt;/dt&gt;&lt;dd&gt;&#x27; + escapeText(run.runtime + &#x27; / &#x27; + snapshot.effort) + &#x27;&lt;/dd&gt;&lt;dt&gt;Configuration&lt;/dt&gt;&lt;dd&gt;&#x27; + escapeText(snapshot.preset) + &#x27;&lt;/dd&gt;&lt;dt&gt;Working directory&lt;/dt&gt;&lt;dd&gt;&#x27; + escapeText(snapshot.directory) + &#x27;&lt;/dd&gt;&lt;dt&gt;Active worker limit&lt;/dt&gt;&lt;dd&gt;&#x27; + escapeText(snapshot.workers) + &#x27;&lt;/dd&gt;&lt;dt&gt;Token budget&lt;/dt&gt;&lt;dd&gt;&#x27; + escapeText(snapshot.budget || &#x27;Not configured&#x27;) + &#x27;&lt;/dd&gt;&lt;/dl&gt;&lt;div class=&quot;kb-line&quot;&gt;&lt;/div&gt;&lt;h3&gt;Role assignments&lt;/h3&gt;&lt;div class=&quot;kb-table-wrap&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Role&lt;/th&gt;&lt;th&gt;Model / effort&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&#x27; + snapshot.roles.map(function (role) { return &#x27;&lt;tr&gt;&lt;td&gt;&#x27; + escapeText(role.name) + &#x27;&lt;/td&gt;&lt;td&gt;&#x27; + escapeText(role.model + &#x27; / &#x27; + role.effort) + &#x27;&lt;/td&gt;&lt;/tr&gt;&#x27;; }).join(&#x27;&#x27;) + &#x27;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&#x27;;
+        navigate(&#x27;queued&#x27;);
+      }
+      function recordDecision(approved, feedback) {
+        const run = runs.find(function (item) { return item.key === &#x27;search&#x27; &amp;&amp; !item.previewId; });
+        run.status = &#x27;queued&#x27;; run.label = &#x27;Queued&#x27;; run.agents = &#x27;0&#x27;;
+        root.querySelector(&#x27;#kb-decision-title&#x27;).textContent = approved ? &#x27;Package approved&#x27; : &#x27;Changes requested&#x27;;
+        const decisionCommand = commandItems.find(function (item) { return item.page === &#x27;approval&#x27;; });
+        decisionCommand.label = &#x27;Decision record&#x27;;
+        decisionCommand.detail = approved ? &#x27;Search improvements · Approved&#x27; : &#x27;Search improvements · Changes requested&#x27;;
+        root.querySelector(&#x27;#kb-approval-status&#x27;).textContent = approved ? &#x27;Approved · continuation queued&#x27; : &#x27;Changes requested · revision queued&#x27;;
+        root.querySelector(&#x27;#kb-approval-status&#x27;).className = &#x27;kb-badge&#x27;;
+        root.querySelector(&#x27;#kb-decision-summary&#x27;).textContent = approved ? &#x27;Continuation queued in preview&#x27; : &#x27;Package revision queued in preview&#x27;;
+        root.querySelector(&#x27;#kb-approval-actions&#x27;).hidden = true;
+        root.querySelector(&#x27;#kb-changes-form&#x27;).hidden = true;
+        root.querySelector(&#x27;#kb-decision-result&#x27;).textContent = approved ? &#x27;Preview approval recorded for this package. No tickets were published and no runtime was started.&#x27; : &#x27;Preview feedback recorded: &#x27; + feedback;
+        root.querySelector(&#x27;#kb-decision-result&#x27;).hidden = false;
+        root.querySelector(&#x27;#kb-search-project-status&#x27;).textContent = approved ? &#x27;Implementation queued&#x27; : &#x27;Revision queued&#x27;;
+        root.querySelector(&#x27;#kb-search-project-status&#x27;).className = &#x27;kb-badge&#x27;;
+        root.querySelector(&#x27;#kb-search-run-status&#x27;).textContent = &#x27;1 queued run&#x27;;
+        root.querySelector(&#x27;#kb-search-run-next&#x27;).textContent = approved ? &#x27;Approved package · Ready to continue&#x27; : &#x27;Spec &amp; Tickets · Changes requested&#x27;;
+        renderRuns();
+      }
+      root.querySelector(&#x27;#kb-launch-roles&#x27;).innerHTML = roleNames.map(function (name, index) {
+        const defaultValue = name === &#x27;Independent adjudicator&#x27; ? &#x27;Codex / runtime default&#x27; : [&#x27;Implementer&#x27;, &#x27;PR / fix author&#x27;].includes(name) ? &#x27;Claude / Opus&#x27; : &#x27;Inherit orchestrator&#x27;;
+        const options = [&#x27;Inherit orchestrator&#x27;, &#x27;Claude / Opus&#x27;, &#x27;Codex / runtime default&#x27;].map(function (value) { return &#x27;&lt;option&#x27; + (value === defaultValue ? &#x27; selected&#x27; : &#x27;&#x27;) + &#x27;&gt;&#x27; + value + &#x27;&lt;/option&gt;&#x27;; }).join(&#x27;&#x27;);
+        return &#x27;&lt;tr&gt;&lt;td&gt;&#x27; + name + &#x27;&lt;/td&gt;&lt;td&gt;&lt;select aria-label=&quot;&#x27; + name + &#x27; model&quot; data-role-model=&quot;&#x27; + index + &#x27;&quot;&gt;&#x27; + options + &#x27;&lt;/select&gt;&lt;/td&gt;&lt;td&gt;&lt;select aria-label=&quot;&#x27; + name + &#x27; effort&quot; data-role-effort=&quot;&#x27; + index + &#x27;&quot;&gt;&lt;option&gt;Inherit&lt;/option&gt;&lt;option&gt;high&lt;/option&gt;&lt;option&gt;medium&lt;/option&gt;&lt;option&gt;low&lt;/option&gt;&lt;/select&gt;&lt;/td&gt;&lt;/tr&gt;&#x27;;
+      }).join(&#x27;&#x27;);
+      function applyPreset(name) {
+        root.querySelector(&#x27;#kb-preset&#x27;).value = name;
+        if (name === &#x27;Skill defaults&#x27;) {
+          root.querySelectorAll(&#x27;[data-role-model]&#x27;).forEach(function (node) {
+            const role = roleNames[Number(node.dataset.roleModel)];
+            node.value = role === &#x27;Independent adjudicator&#x27; ? &#x27;Codex / runtime default&#x27; : [&#x27;Implementer&#x27;, &#x27;PR / fix author&#x27;].includes(role) ? &#x27;Claude / Opus&#x27; : &#x27;Inherit orchestrator&#x27;;
+          });
+          root.querySelectorAll(&#x27;[data-role-effort]&#x27;).forEach(function (node) { node.value = &#x27;Inherit&#x27;; });
+          root.querySelector(&#x27;#kb-workers&#x27;).value = &#x27;3&#x27;;
+          root.querySelector(&#x27;#kb-budget&#x27;).value = &#x27;&#x27;;
+        }
+        updateResolved();
+      }
+      function updateResolved() {
+        const runtime = root.querySelector(&#x27;#kb-runtime&#x27;).value;
+        const model = root.querySelector(&#x27;#kb-model&#x27;).value;
+        const effort = root.querySelector(&#x27;#kb-effort&#x27;).value;
+        const inherited = Array.from(root.querySelectorAll(&#x27;[data-role-model]&#x27;)).filter(function (node) { return node.value === &#x27;Inherit orchestrator&#x27;; }).length;
+        root.querySelector(&#x27;#kb-resolved&#x27;).textContent = runtime + &#x27; / &#x27; + model + &#x27; / &#x27; + effort + &#x27;. &#x27; + inherited + &#x27; roles inherit this model. All explicit role overrides are included in the run snapshot.&#x27;;
+      }
+      function renderMetrics() {
+        const project = root.querySelector(&#x27;#kb-metrics-project&#x27;).value === &#x27;launch&#x27;;
+        root.querySelector(&#x27;#kb-completed&#x27;).textContent = project ? &#x27;7 / 8&#x27; : &#x27;19 / 24&#x27;;
+        root.querySelector(&#x27;#kb-success&#x27;).textContent = project ? &#x27;87.5% success&#x27; : &#x27;79.2% success&#x27;;
+        root.querySelector(&#x27;#kb-duration&#x27;).textContent = project ? &#x27;18m&#x27; : &#x27;21m&#x27;;
+        root.querySelector(&#x27;#kb-tokens&#x27;).textContent = project ? &#x27;800k&#x27; : &#x27;2.40M&#x27;;
+        const values = project ? [[&#x27;Orchestrator&#x27;, 140], [&#x27;Implementer&#x27;, 440], [&#x27;Reviewer / adjudicator&#x27;, 160], [&#x27;Verification / other&#x27;, 60]] : [[&#x27;Orchestrator&#x27;, 420], [&#x27;Implementer&#x27;, 1320], [&#x27;Reviewer / adjudicator&#x27;, 480], [&#x27;Verification / other&#x27;, 180]];
+        const total = values.reduce(function (sum, row) { return sum + row[1]; }, 0);
+        root.querySelector(&#x27;#kb-role-metrics&#x27;).innerHTML = values.map(function (row) { return &#x27;&lt;div style=&quot;margin:13px 0&quot;&gt;&lt;div class=&quot;kb-row kb-between&quot;&gt;&lt;span&gt;&#x27; + row[0] + &#x27;&lt;/span&gt;&lt;span&gt;&#x27; + row[1].toLocaleString() + &#x27;k tokens&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;kb-meter&quot;&gt;&lt;span style=&quot;width:&#x27; + row[1] / total * 100 + &#x27;%&quot;&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&#x27;; }).join(&#x27;&#x27;);
+        const timeRows = project ? [[&#x27;Median wait for human&#x27;, &#x27;12m&#x27;], [&#x27;Median CI wait&#x27;, &#x27;4m&#x27;], [&#x27;Median convergence passes&#x27;, &#x27;1&#x27;], [&#x27;Retries&#x27;, &#x27;2&#x27;], [&#x27;Failed / cancelled&#x27;, &#x27;1 / 0&#x27;]] : [[&#x27;Median wait for human&#x27;, &#x27;34m&#x27;], [&#x27;Median CI wait&#x27;, &#x27;6m&#x27;], [&#x27;Median convergence passes&#x27;, &#x27;2&#x27;], [&#x27;Retries&#x27;, &#x27;7&#x27;], [&#x27;Failed / cancelled&#x27;, &#x27;3 / 2&#x27;]];
+        root.querySelector(&#x27;#kb-time-metrics&#x27;).innerHTML = timeRows.map(function (row) { return &#x27;&lt;dt&gt;&#x27; + row[0] + &#x27;&lt;/dt&gt;&lt;dd&gt;&#x27; + row[1] + &#x27;&lt;/dd&gt;&#x27;; }).join(&#x27;&#x27;);
+      }
+      root.addEventListener(&#x27;click&#x27;, function (event) {
+        const button = event.target.closest(&#x27;button&#x27;);
+        if (!button || !root.contains(button)) return;
+        if (button.dataset.previewId) { showPreviewRun(runs.find(function (run) { return run.previewId === button.dataset.previewId; })); return; }
+        if (button.dataset.commandPage) {
+          navigate(button.dataset.commandPage);
+          const firstControl = root.querySelector(&#x27;[data-page=&quot;&#x27; + button.dataset.commandPage + &#x27;&quot;] button, [data-page=&quot;&#x27; + button.dataset.commandPage + &#x27;&quot;] input, [data-page=&quot;&#x27; + button.dataset.commandPage + &#x27;&quot;] textarea, [data-page=&quot;&#x27; + button.dataset.commandPage + &#x27;&quot;] select&#x27;);
+          if (firstControl) firstControl.focus();
+          return;
+        }
+        if (button.dataset.view) {
+          navigate(button.dataset.view);
+        }
+        if (button.dataset.agent) renderAgent(button.dataset.agent);
+        if (button.dataset.inspect) renderInspector(button.dataset.inspect);
+        if (button.dataset.action === &#x27;snapshot&#x27;) renderInspector(&#x27;snapshot&#x27;);
+        if (button.dataset.action === &#x27;commands&#x27;) openCommands();
+        if (button.dataset.action === &#x27;close-commands&#x27;) closeCommands();
+        if (button.dataset.action === &#x27;existing-page&#x27;) notify(&#x27;Your existing shipped, archived, and session-history pages remain available from these links.&#x27;);
+        if (button.dataset.action === &#x27;approve&#x27;) recordDecision(true, &#x27;&#x27;);
+        if (button.dataset.action === &#x27;changes&#x27;) { root.querySelector(&#x27;#kb-changes-form&#x27;).hidden = false; root.querySelector(&#x27;#kb-changes-input&#x27;).focus(); }
+        if (button.dataset.action === &#x27;use-preset&#x27;) { applyPreset(&#x27;Skill defaults&#x27;); navigate(&#x27;new&#x27;); }
+        if (button.dataset.action === &#x27;custom&#x27;) { applyPreset(&#x27;Skill defaults&#x27;); applyPreset(&#x27;Custom team&#x27;); root.querySelector(&#x27;details&#x27;).open = true; navigate(&#x27;new&#x27;); }
+      });
+      root.querySelector(&#x27;#kb-runtime&#x27;).addEventListener(&#x27;change&#x27;, function () {
+        root.querySelector(&#x27;#kb-model&#x27;).innerHTML = this.value === &#x27;Codex&#x27; ? &#x27;&lt;option&gt;Runtime default&lt;/option&gt;&#x27; : &#x27;&lt;option&gt;Opus&lt;/option&gt;&lt;option&gt;Runtime default&lt;/option&gt;&#x27;;
+        updateResolved();
+      });
+      root.querySelector(&#x27;#kb-launch-form&#x27;).addEventListener(&#x27;change&#x27;, function (event) {
+        if (event.target.id === &#x27;kb-preset&#x27;) applyPreset(event.target.value);
+        else {
+          if (event.target.hasAttribute(&#x27;data-role-model&#x27;) || event.target.hasAttribute(&#x27;data-role-effort&#x27;) || [&#x27;kb-workers&#x27;, &#x27;kb-budget&#x27;].includes(event.target.id)) root.querySelector(&#x27;#kb-preset&#x27;).value = &#x27;Custom team&#x27;;
+          updateResolved();
+        }
+      });
+      root.querySelector(&#x27;#kb-launch-form&#x27;).addEventListener(&#x27;submit&#x27;, function (event) {
+        event.preventDefault();
+        const prompt = root.querySelector(&#x27;#kb-prompt&#x27;).value.trim();
+        if (!prompt) { root.querySelector(&#x27;#kb-prompt&#x27;).setCustomValidity(&#x27;Describe the work to launch.&#x27;); root.querySelector(&#x27;#kb-prompt&#x27;).reportValidity(); return; }
+        const project = root.querySelector(&#x27;#kb-project&#x27;).value;
+        const runtime = root.querySelector(&#x27;#kb-runtime&#x27;).value + &#x27; / &#x27; + root.querySelector(&#x27;#kb-model&#x27;).value;
+        const effort = root.querySelector(&#x27;#kb-effort&#x27;).value;
+        const run = {
+          title: prompt, project: project, key: project === &#x27;Agent launch controls&#x27; ? &#x27;launch&#x27; : &#x27;search&#x27;,
+          status: &#x27;queued&#x27;, label: &#x27;Queued&#x27;, runtime: runtime, agents: &#x27;0&#x27;, duration: &#x27;0m / no usage&#x27;,
+          page: &#x27;queued&#x27;, previewId: String(previewSequence++),
+          snapshot: {
+            effort: effort, preset: root.querySelector(&#x27;#kb-preset&#x27;).value, directory: root.querySelector(&#x27;#kb-directory&#x27;).value,
+            workers: root.querySelector(&#x27;#kb-workers&#x27;).value, budget: root.querySelector(&#x27;#kb-budget&#x27;).value,
+            roles: roleNames.map(function (name, index) {
+              const modelChoice = root.querySelector(&#x27;[data-role-model=&quot;&#x27; + index + &#x27;&quot;]&#x27;).value;
+              const effortChoice = root.querySelector(&#x27;[data-role-effort=&quot;&#x27; + index + &#x27;&quot;]&#x27;).value;
+              return { name: name, model: modelChoice === &#x27;Inherit orchestrator&#x27; ? runtime + &#x27; (inherited)&#x27; : modelChoice, effort: effortChoice === &#x27;Inherit&#x27; ? effort + &#x27; (inherited)&#x27; : effortChoice };
+            })
+          }
+        };
+        runs.push(run);
+        renderRuns();
+        showPreviewRun(run);
+      });
+      root.querySelector(&#x27;#kb-prompt&#x27;).addEventListener(&#x27;input&#x27;, function () { this.setCustomValidity(&#x27;&#x27;); });
+      root.querySelector(&#x27;#kb-run-project&#x27;).addEventListener(&#x27;change&#x27;, renderRuns);
+      root.querySelector(&#x27;#kb-run-status&#x27;).addEventListener(&#x27;change&#x27;, renderRuns);
+      root.querySelector(&#x27;#kb-metrics-project&#x27;).addEventListener(&#x27;change&#x27;, renderMetrics);
+      root.querySelector(&#x27;#kb-command-query&#x27;).addEventListener(&#x27;input&#x27;, renderCommands);
+      root.querySelector(&#x27;#kb-guidance-form&#x27;).addEventListener(&#x27;submit&#x27;, function (event) {
+        event.preventDefault();
+        const input = root.querySelector(&#x27;#kb-guidance&#x27;);
+        const guidance = input.value.trim();
+        if (!guidance) return;
+        const entry = document.createElement(&#x27;li&#x27;);
+        const timestamp = document.createElement(&#x27;time&#x27;);
+        timestamp.textContent = &#x27;Just now · Preview&#x27;;
+        entry.appendChild(timestamp);
+        entry.appendChild(document.createTextNode(&#x27;Guidance recorded: &#x27; + guidance));
+        root.querySelector(&#x27;#kb-activity-events&#x27;).prepend(entry);
+        root.querySelector(&#x27;#kb-guidance-status&#x27;).textContent = &#x27;Guidance recorded in preview. A real run will show queued, delivered, and acknowledged states.&#x27;;
+        root.querySelector(&#x27;#kb-guidance-status&#x27;).hidden = false;
+        input.value = &#x27;&#x27;;
+      });
+      root.querySelector(&#x27;#kb-changes-form&#x27;).addEventListener(&#x27;submit&#x27;, function (event) {
+        event.preventDefault();
+        const feedback = root.querySelector(&#x27;#kb-changes-input&#x27;).value.trim();
+        if (feedback) recordDecision(false, feedback);
+      });
+      root.addEventListener(&#x27;keydown&#x27;, function (event) {
+        if ((event.metaKey || event.ctrlKey) &amp;&amp; event.key.toLowerCase() === &#x27;k&#x27;) { event.preventDefault(); openCommands(); }
+        if (event.key === &#x27;Escape&#x27; &amp;&amp; !root.querySelector(&#x27;#kb-command-panel&#x27;).hidden) { event.preventDefault(); closeCommands(); }
+        if (event.key === &#x27;ArrowDown&#x27; &amp;&amp; event.target.id === &#x27;kb-command-query&#x27;) {
+          const first = root.querySelector(&#x27;#kb-command-results button&#x27;);
+          if (first) { event.preventDefault(); first.focus(); }
+        }
+      });
+      function renderDesign() {
+        root.classList.toggle(&#x27;kb-tight&#x27;, state.density === &#x27;Compact&#x27;);
+        const graphite = state.accent === &#x27;Graphite&#x27;;
+        root.style.setProperty(&#x27;--kb-accent&#x27;, graphite ? &#x27;light-dark(#425466, #c0ccd8)&#x27; : &#x27;light-dark(#4359c7, #a2b0ff)&#x27;);
+        root.style.setProperty(&#x27;--kb-accent-bg&#x27;, graphite ? &#x27;light-dark(#eaf0f5, #293340)&#x27; : &#x27;light-dark(#edf0ff, #252d4b)&#x27;);
+        root.style.setProperty(&#x27;--kb-accent-button&#x27;, graphite ? &#x27;light-dark(#334155, #c0ccd8)&#x27; : &#x27;light-dark(#4359c7, #bac4ff)&#x27;);
+        root.style.setProperty(&#x27;--kb-accent-button-text&#x27;, graphite ? &#x27;light-dark(#ffffff, #18212b)&#x27; : &#x27;light-dark(#ffffff, #192340)&#x27;);
+      }
+      renderAgent(&#x27;launch&#x27;); renderRuns(); updateResolved(); renderMetrics(); renderInspector(&#x27;decision&#x27;); renderDesign(); navigate(&#x27;run&#x27;);
+      if (globalThis.Tweak) {
+        const tweak = new Tweak({ container: root, onChange: renderDesign });
+        tweak.addSelect(state, &#x27;density&#x27;, { label: &#x27;Page density&#x27;, options: [&#x27;Comfortable&#x27;, &#x27;Compact&#x27;] });
+        tweak.addSelect(state, &#x27;accent&#x27;, { label: &#x27;Accent&#x27;, options: [&#x27;Indigo&#x27;, &#x27;Graphite&#x27;] });
+      }
+    }());
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+  let lastPointerWasTouch = false;
+  let pinnedByTouch = false;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    pinnedByTouch = false;
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handlePointer = (event) =&gt; {
+    lastPointerWasTouch =
+      event.type === &quot;pointerdown&quot; &amp;&amp; event.pointerType === &quot;touch&quot;;
+  };
+  const handleTouchClick = (event) =&gt; {
+    const isTouch = event.pointerType === &quot;touch&quot; || lastPointerWasTouch;
+    lastPointerWasTouch = false;
+    if (!isTouch || event.detail === 0) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (
+      trigger == null ||
+      !trigger.isConnected ||
+      getContent(trigger).length === 0 ||
+      (pinnedByTouch &amp;&amp; activeTrigger === trigger)
+    ) {
+      if (pinnedByTouch) {
+        closeTooltip();
+      }
+      return;
+    }
+    openTooltip(trigger);
+    pinnedByTouch = activeTrigger === trigger;
+    window.setTimeout(() =&gt; {
+      if (activeTrigger === trigger &amp;&amp; !trigger.isConnected) {
+        closeTooltip(false);
+      }
+    }, 0);
+  };
+  const handleLeave = (event) =&gt; {
+    if (pinnedByTouch) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    lastPointerWasTouch = false;
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    lastPointerWasTouch = false;
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerdown&quot;, handlePointer);
+    document.removeEventListener(&quot;pointercancel&quot;, handlePointer);
+    document.removeEventListener(&quot;click&quot;, handleTouchClick);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerdown&quot;, handlePointer);
+  document.addEventListener(&quot;pointercancel&quot;, handlePointer);
+  document.addEventListener(&quot;click&quot;, handleTouchClick);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-tabs&quot;&gt;
+(() =&gt; {
+  const selector = &#x27;.nav[role=&quot;tablist&quot;] [role=&quot;tab&quot;]&#x27;;
+  const disabled = &#x27;:disabled,[aria-disabled=&quot;true&quot;]&#x27;;
+  const selectTab = (selected) =&gt; {
+    const panelId = selected.getAttribute(&quot;aria-controls&quot;);
+    for (const tab of selected.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;)) {
+      const active = tab === selected;
+      tab.classList.toggle(&quot;active&quot;, active);
+      tab.setAttribute(&quot;aria-selected&quot;, String(active));
+      const id = tab.getAttribute(&quot;aria-controls&quot;);
+      const panel = id &amp;&amp; document.getElementById(id);
+      if (panel != null) {
+        panel.hidden = id !== panelId;
+        if (!panel.hidden &amp;&amp; selected.id) {
+          panel.setAttribute(&quot;aria-labelledby&quot;, selected.id);
+        }
+      }
+    }
+  };
+  const interact = (event) =&gt; {
+    const tab = event.target?.closest?.(selector);
+    if (event.defaultPrevented || tab == null || tab.matches(disabled)) {
+      return;
+    }
+    if (event.type === &quot;click&quot;) {
+      selectTab(tab);
+      return;
+    }
+    const tabs = Array.from(
+      tab.closest(&#x27;[role=&quot;tablist&quot;]&#x27;).querySelectorAll(&#x27;[role=&quot;tab&quot;]&#x27;),
+    ).filter((candidate) =&gt; !candidate.matches(disabled));
+    const current = tabs.indexOf(tab);
+    let next;
+    if (event.key === &quot;ArrowRight&quot; || event.key === &quot;ArrowDown&quot;) {
+      next = (current + 1) % tabs.length;
+    } else if (event.key === &quot;ArrowLeft&quot; || event.key === &quot;ArrowUp&quot;) {
+      next = (current + tabs.length - 1) % tabs.length;
+    } else if (event.key === &quot;Home&quot;) {
+      next = 0;
+    } else if (event.key === &quot;End&quot;) {
+      next = tabs.length - 1;
+    } else {
+      return;
+    }
+    event.preventDefault();
+    tabs[next].focus();
+    selectTab(tabs[next]);
+  };
+
+  for (const list of document.querySelectorAll(&#x27;.nav[role=&quot;tablist&quot;]&#x27;)) {
+    const selected =
+      list.querySelector(&#x27;[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;].active&#x27;) ??
+      list.querySelector(&#x27;[role=&quot;tab&quot;]&#x27;);
+    if (selected != null) {
+      selectTab(selected);
+    }
+  }
+  document.addEventListener(&quot;click&quot;, interact);
+  document.addEventListener(&quot;keydown&quot;, interact);
+  window.addEventListener(&quot;pagehide&quot;, () =&gt; {
+    document.removeEventListener(&quot;click&quot;, interact);
+    document.removeEventListener(&quot;keydown&quot;, interact);
+  }, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>

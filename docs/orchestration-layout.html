@@ -1,0 +1,647 @@
+<div id="kelvin-orchestration" aria-label="Dashboard layout proposal">
+  <style>
+    #kelvin-orchestration {
+      --kb-bg: light-dark(#f9f9f7, #0d0d0d);
+      --kb-panel: light-dark(#fcfcfb, #1a1a19);
+      --kb-ink: light-dark(#0b0b0b, #f4f4f0);
+      --kb-secondary: light-dark(#52514e, #c3c2b7);
+      --kb-border: light-dark(#deded8, #373733);
+      --kb-tint: light-dark(#eeeeea, #272724);
+      --kb-green: light-dark(#166b24, #93d49b);
+      --kb-green-bg: light-dark(#e3f1e5, #193421);
+      --kb-amber: light-dark(#80520a, #f1ce8b);
+      --kb-amber-bg: light-dark(#fbefd7, #392d15);
+      --kb-red: light-dark(#a72d2d, #f8aaaa);
+      color-scheme: light dark; color: var(--kb-ink); background: var(--kb-bg);
+      font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+      border: 1px solid var(--kb-border); border-radius: 10px; overflow: hidden;
+    }
+    #kelvin-orchestration * { box-sizing: border-box; }
+    #kelvin-orchestration [hidden] { display: none !important; }
+    #kelvin-orchestration .kb-preview { padding: 7px 22px; background: var(--kb-tint); color: var(--kb-secondary); font-size: 12px; }
+    #kelvin-orchestration header { padding: 20px 24px 0; }
+    #kelvin-orchestration .kb-brand { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    #kelvin-orchestration .kb-brand strong { font-size: 18px; font-weight: 600; }
+    #kelvin-orchestration nav { display: flex; flex-wrap: wrap; gap: 4px; padding-top: 16px; border-bottom: 1px solid var(--kb-border); }
+    #kelvin-orchestration button, #kelvin-orchestration input, #kelvin-orchestration select, #kelvin-orchestration textarea { font: inherit; color: inherit; }
+    #kelvin-orchestration button { background: var(--kb-panel); border: 1px solid var(--kb-border); border-radius: 6px; padding: 7px 11px; cursor: pointer; }
+    #kelvin-orchestration button:hover { background: var(--kb-tint); }
+    #kelvin-orchestration .kb-primary { background: var(--kb-ink); color: var(--kb-bg); border-color: var(--kb-ink); }
+    #kelvin-orchestration .kb-primary:hover { opacity: .86; background: var(--kb-ink); }
+    #kelvin-orchestration nav button { background: transparent; border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: 9px 12px; color: var(--kb-secondary); }
+    #kelvin-orchestration nav button[aria-current="page"] { border-color: var(--kb-ink); color: var(--kb-ink); }
+    #kelvin-orchestration main { padding: 24px; }
+    #kelvin-orchestration h1 { font-size: 20px; margin: 0 0 5px; line-height: 1.3; font-weight: 600; }
+    #kelvin-orchestration h2 { font-size: 15px; margin: 0 0 12px; font-weight: 600; }
+    #kelvin-orchestration h3 { font-size: 14px; margin: 0 0 7px; font-weight: 600; }
+    #kelvin-orchestration p { margin: 0 0 14px; }
+    #kelvin-orchestration small, #kelvin-orchestration .kb-muted { color: var(--kb-secondary); }
+    #kelvin-orchestration small { font-size: 12px; display: block; }
+    #kelvin-orchestration .kb-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    #kelvin-orchestration .kb-between { justify-content: space-between; }
+    #kelvin-orchestration .kb-heading { margin-bottom: 22px; }
+    #kelvin-orchestration .kb-panel { border: 1px solid var(--kb-border); background: var(--kb-panel); border-radius: 10px; padding: 17px; min-width: 0; }
+    #kelvin-orchestration .kb-columns { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 18px; }
+    #kelvin-orchestration .kb-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    #kelvin-orchestration .kb-stack { display: grid; gap: 16px; }
+    #kelvin-orchestration .kb-badge { display: inline-block; border-radius: 20px; padding: 2px 8px; font-size: 12px; background: var(--kb-tint); white-space: nowrap; }
+    #kelvin-orchestration .kb-working { color: var(--kb-green); background: var(--kb-green-bg); }
+    #kelvin-orchestration .kb-waiting { color: var(--kb-amber); background: var(--kb-amber-bg); }
+    #kelvin-orchestration .kb-line { border-top: 1px solid var(--kb-border); margin: 14px 0; }
+    #kelvin-orchestration .kb-link { padding: 0; background: transparent; border: 0; text-decoration: underline; text-underline-offset: 3px; }
+    #kelvin-orchestration .kb-link:hover { background: transparent; }
+    #kelvin-orchestration .kb-stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 18px 0; }
+    #kelvin-orchestration .kb-value { font-size: 24px; font-variant-numeric: tabular-nums; margin: 4px 0; }
+    #kelvin-orchestration .kb-table-wrap { overflow-x: auto; }
+    #kelvin-orchestration table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
+    #kelvin-orchestration th { font-weight: 500; color: var(--kb-secondary); }
+    #kelvin-orchestration th, #kelvin-orchestration td { padding: 11px 8px; border-bottom: 1px solid var(--kb-border); vertical-align: top; }
+    #kelvin-orchestration th:first-child, #kelvin-orchestration td:first-child { padding-left: 0; }
+    #kelvin-orchestration th:last-child, #kelvin-orchestration td:last-child { padding-right: 0; }
+    #kelvin-orchestration tr:last-child td { border-bottom: 0; }
+    #kelvin-orchestration label { display: grid; gap: 6px; font-size: 13px; min-width: 0; }
+    #kelvin-orchestration input, #kelvin-orchestration select, #kelvin-orchestration textarea { width: 100%; min-width: 0; background: var(--kb-panel); border: 1px solid var(--kb-border); border-radius: 6px; padding: 8px 10px; }
+    #kelvin-orchestration textarea { resize: vertical; min-height: 100px; }
+    #kelvin-orchestration .kb-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    #kelvin-orchestration details { margin-top: 20px; }
+    #kelvin-orchestration summary { cursor: pointer; font-weight: 500; margin-bottom: 12px; }
+    #kelvin-orchestration .kb-stations { display: flex; flex-wrap: wrap; gap: 7px; margin: 18px 0; font-size: 12px; }
+    #kelvin-orchestration .kb-stations span { padding: 5px 8px; background: var(--kb-tint); border-radius: 5px; }
+    #kelvin-orchestration .kb-stations .kb-current { background: var(--kb-green-bg); color: var(--kb-green); }
+    #kelvin-orchestration .kb-task { display: block; text-align: left; width: 100%; margin: 7px 0; padding: 12px; }
+    #kelvin-orchestration .kb-task[aria-pressed="true"] { border-color: var(--kb-ink); }
+    #kelvin-orchestration .kb-task strong { font-weight: 500; }
+    #kelvin-orchestration .kb-events { margin: 0; padding: 0; list-style: none; }
+    #kelvin-orchestration .kb-events li { padding: 9px 0; border-bottom: 1px solid var(--kb-border); }
+    #kelvin-orchestration .kb-events time { font-variant-numeric: tabular-nums; font-size: 12px; color: var(--kb-secondary); margin-right: 7px; }
+    #kelvin-orchestration .kb-meter { height: 6px; border-radius: 4px; background: var(--kb-tint); margin-top: 7px; overflow: hidden; }
+    #kelvin-orchestration .kb-meter span { display: block; height: 100%; background: var(--kb-secondary); }
+    #kelvin-orchestration .kb-definition { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 16px; margin: 12px 0; font-size: 13px; }
+    #kelvin-orchestration dt { color: var(--kb-secondary); }
+    #kelvin-orchestration dd { margin: 0; overflow-wrap: anywhere; }
+    #kelvin-orchestration .kb-notice { padding: 12px 14px; background: var(--kb-amber-bg); color: var(--kb-amber); border-radius: 7px; margin: 16px 0; }
+    #kelvin-orchestration .kb-toast { padding: 10px 24px; background: var(--kb-green-bg); color: var(--kb-green); }
+    #kelvin-orchestration .kb-tight .kb-panel { padding: 12px; }
+    @media (max-width: 720px) {
+      #kelvin-orchestration .kb-columns { grid-template-columns: 1fr; }
+      #kelvin-orchestration .kb-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #kelvin-orchestration .kb-fields { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 450px) {
+      #kelvin-orchestration header { padding: 16px 12px 0; }
+      #kelvin-orchestration main { padding: 18px 12px; }
+      #kelvin-orchestration .kb-grid { grid-template-columns: 1fr; }
+      #kelvin-orchestration nav button { padding: 9px 8px; font-size: 13px; }
+      #kelvin-orchestration .kb-definition { grid-template-columns: 1fr; gap: 2px; }
+      #kelvin-orchestration dd { margin-bottom: 8px; }
+    }
+    @media (pointer: coarse) {
+      #kelvin-orchestration button, #kelvin-orchestration input, #kelvin-orchestration select { min-height: 44px; }
+      #kelvin-orchestration input, #kelvin-orchestration select, #kelvin-orchestration textarea { font-size: 16px; }
+    }
+    #kelvin-orchestration {
+      --kb-bg: light-dark(#f8f9fc, #111318);
+      --kb-panel: light-dark(#ffffff, #191c22);
+      --kb-ink: light-dark(#202531, #eef0f6);
+      --kb-secondary: light-dark(#60697b, #a9b1c1);
+      --kb-border: light-dark(#e3e7ee, #2d323e);
+      --kb-tint: light-dark(#eef1f6, #252a34);
+      --kb-accent: light-dark(#4359c7, #a2b0ff);
+      --kb-accent-bg: light-dark(#edf0ff, #252d4b);
+      --kb-accent-button: light-dark(#4359c7, #bac4ff);
+      --kb-accent-button-text: light-dark(#ffffff, #192340);
+      --kb-green: light-dark(#197058, #8ad7be);
+      --kb-green-bg: light-dark(#e6f4ee, #1e3830);
+      --kb-amber: light-dark(#8c5a16, #eac78c);
+      --kb-amber-bg: light-dark(#fff4df, #3d301d);
+      font-size: 13px; line-height: 1.55; border-radius: 12px; text-align: left;
+    }
+    #kelvin-orchestration .kb-preview { font-size: 11px; padding: 8px 18px; background: var(--kb-panel); border-bottom: 1px solid var(--kb-border); display: flex; gap: 12px; flex-wrap: wrap; }
+    #kelvin-orchestration .kb-preview > span { font-size: 10px; letter-spacing: .09em; font-weight: 600; color: var(--kb-accent); }
+    #kelvin-orchestration .kb-shell { display: grid; grid-template-columns: 174px minmax(0, 1fr); }
+    #kelvin-orchestration .kb-sidebar { display: flex; flex-direction: column; gap: 20px; padding: 20px 12px; border-right: 1px solid var(--kb-border); background: var(--kb-panel); min-width: 0; }
+    #kelvin-orchestration .kb-workspace-brand { display: flex; align-items: center; gap: 9px; padding: 0 4px; }
+    #kelvin-orchestration .kb-workspace-brand strong { font-size: 14px; letter-spacing: -.2px; }
+    #kelvin-orchestration .kb-workspace-brand small { font-size: 11px; }
+    #kelvin-orchestration .kb-workspace-mark { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: var(--kb-ink); color: var(--kb-panel); font-size: 15px; font-weight: 600; }
+    #kelvin-orchestration .kb-new-run { width: 100%; display: flex; justify-content: center; align-items: center; gap: 8px; }
+    #kelvin-orchestration .kb-primary { background: var(--kb-accent-button); color: var(--kb-accent-button-text); border-color: var(--kb-accent-button); }
+    #kelvin-orchestration .kb-primary:hover { background: var(--kb-accent-button); }
+    #kelvin-orchestration nav { display: grid; gap: 5px; padding: 0; border: 0; }
+    #kelvin-orchestration nav button { display: flex; align-items: center; gap: 8px; border: 0; padding: 9px 10px; border-radius: 6px; text-align: left; font-size: 12px; }
+    #kelvin-orchestration nav button[aria-current="page"] { color: var(--kb-accent); background: var(--kb-accent-bg); font-weight: 500; }
+    #kelvin-orchestration .kb-nav-count { margin-left: auto; font-size: 11px; font-variant-numeric: tabular-nums; }
+    #kelvin-orchestration .kb-sidebar-section { display: grid; gap: 7px; }
+    #kelvin-orchestration .kb-eyebrow { font-size: 10px; letter-spacing: .09em; color: var(--kb-secondary); font-weight: 600; padding: 0 10px; }
+    #kelvin-orchestration .kb-project-shortcut { background: transparent; border: 0; padding: 7px 10px; font-size: 12px; display: flex; align-items: center; gap: 9px; text-align: left; }
+    #kelvin-orchestration .kb-dot { width: 6px; height: 6px; border-radius: 100%; background: var(--kb-green); display: inline-block; flex: 0 0 auto; }
+    #kelvin-orchestration .kb-dot-amber { background: var(--kb-amber); }
+    #kelvin-orchestration .kb-sidebar-footer { margin-top: auto; padding: 18px 6px 0; border-top: 1px solid var(--kb-border); font-size: 11px; display: grid; gap: 5px; }
+    #kelvin-orchestration .kb-sidebar-footer strong { font-size: 12px; font-weight: 500; }
+    #kelvin-orchestration .kb-sidebar-footer small { font-size: 11px; }
+    #kelvin-orchestration .kb-sidebar-footer button { text-align: left; margin-top: 6px; font-size: 11px; }
+    #kelvin-orchestration i[data-lucide], #kelvin-orchestration .lucide { width: 15px; height: 15px; flex: 0 0 auto; vertical-align: middle; }
+    #kelvin-orchestration .kb-content { min-width: 0; }
+    #kelvin-orchestration .kb-topbar { padding: 11px 24px; min-height: 52px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid var(--kb-border); background: var(--kb-panel); font-size: 12px; }
+    #kelvin-orchestration .kb-command-trigger { display: flex; align-items: center; gap: 8px; font-size: 11px; padding: 5px 7px; min-width: 166px; color: var(--kb-secondary); }
+    #kelvin-orchestration kbd { margin-left: auto; font: 10px/1.5 ui-monospace, monospace; background: var(--kb-tint); padding: 1px 5px; border: 1px solid var(--kb-border); border-radius: 4px; white-space: nowrap; }
+    #kelvin-orchestration main { padding: 26px 24px; }
+    #kelvin-orchestration h1 { font-size: 23px; letter-spacing: -.65px; font-weight: 600; margin: 4px 0 8px; overflow-wrap: anywhere; }
+    #kelvin-orchestration h2 { font-size: 14px; letter-spacing: -.15px; font-weight: 600; }
+    #kelvin-orchestration h3 { font-size: 13px; font-weight: 600; }
+    #kelvin-orchestration .kb-heading { margin-bottom: 20px; }
+    #kelvin-orchestration .kb-heading small { font-size: 11px; }
+    #kelvin-orchestration .kb-badge { font-size: 11px; font-weight: 500; padding: 3px 8px; }
+    #kelvin-orchestration .kb-panel { padding: 17px; border-radius: 9px; }
+    #kelvin-orchestration .kb-columns { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 16px; }
+    #kelvin-orchestration .kb-console { border-top: 2px solid var(--kb-accent); }
+    #kelvin-orchestration .kb-console h2 { margin-bottom: 2px; }
+    #kelvin-orchestration .kb-avatar { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--kb-accent-bg); color: var(--kb-accent); font-size: 12px; font-weight: 600; flex: 0 0 auto; }
+    #kelvin-orchestration .kb-console-progress { margin: 13px 0 10px; font-size: 13px; }
+    #kelvin-orchestration .kb-console-next { padding-top: 10px; border-top: 1px solid var(--kb-border); }
+    #kelvin-orchestration .kb-stations { gap: 4px; padding: 0; margin: 18px 0; }
+    #kelvin-orchestration .kb-stations span { background: transparent; color: var(--kb-secondary); padding: 5px 7px; font-size: 11px; }
+    #kelvin-orchestration .kb-stations .kb-current { color: var(--kb-accent); background: var(--kb-accent-bg); font-weight: 500; }
+    #kelvin-orchestration .kb-task { background: transparent; border: 1px solid transparent; border-radius: 7px; padding: 11px; margin: 4px 0; }
+    #kelvin-orchestration .kb-task[aria-pressed="true"] { background: var(--kb-accent-bg); border-color: var(--kb-accent-bg); }
+    #kelvin-orchestration .kb-task small { font-size: 11px; margin-top: 4px; }
+    #kelvin-orchestration .kb-task .kb-row { gap: 6px; }
+    #kelvin-orchestration .kb-task strong { font-size: 12px; }
+    #kelvin-orchestration .kb-events li { position: relative; padding: 11px 0 11px 14px; border-bottom: 0; border-left: 1px solid var(--kb-border); font-size: 12px; }
+    #kelvin-orchestration .kb-events li::before { content: ""; position: absolute; left: -3px; top: 18px; height: 5px; width: 5px; border-radius: 100%; background: var(--kb-secondary); }
+    #kelvin-orchestration .kb-events time { display: block; font-size: 10px; margin-bottom: 2px; }
+    #kelvin-orchestration .kb-definition { font-size: 12px; gap: 10px 12px; }
+    #kelvin-orchestration #kb-agent-detail .kb-definition { grid-template-columns: 1fr; gap: 2px; }
+    #kelvin-orchestration #kb-agent-detail dt { font-size: 10px; letter-spacing: .025em; margin-top: 9px; }
+    #kelvin-orchestration #kb-agent-detail dd { font-size: 12px; }
+    #kelvin-orchestration .kb-stats-strip { display: flex; gap: 0; flex-wrap: wrap; border-bottom: 1px solid var(--kb-border); padding-bottom: 20px; margin: 4px 0 22px; }
+    #kelvin-orchestration .kb-stats-strip > div { padding: 0 24px 0 0; margin-right: 24px; border-right: 1px solid var(--kb-border); }
+    #kelvin-orchestration .kb-stats-strip > div:last-child { border: 0; margin: 0; padding: 0; }
+    #kelvin-orchestration .kb-stats-strip strong { display: block; font-size: 22px; letter-spacing: -.6px; font-weight: 500; font-variant-numeric: tabular-nums; }
+    #kelvin-orchestration .kb-stats-strip small { font-size: 11px; }
+    #kelvin-orchestration .kb-notice { background: var(--kb-amber-bg); padding: 14px 16px; font-size: 12px; }
+    #kelvin-orchestration .kb-value { font-size: 25px; letter-spacing: -.65px; }
+    #kelvin-orchestration .kb-stat-grid { gap: 10px; }
+    #kelvin-orchestration th { font-size: 11px; }
+    #kelvin-orchestration td { font-size: 12px; padding-top: 16px; padding-bottom: 16px; }
+    #kelvin-orchestration input, #kelvin-orchestration select, #kelvin-orchestration textarea { font-size: 12px; padding: 9px 10px; }
+    #kelvin-orchestration textarea { min-height: 116px; font-size: 14px; line-height: 1.6; }
+    #kelvin-orchestration .kb-guide { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; margin-top: 14px; }
+    #kelvin-orchestration .kb-guide label { grid-column: 1 / -1; font-size: 11px; color: var(--kb-secondary); }
+    #kelvin-orchestration .kb-guide button { font-size: 11px; display: flex; align-items: center; gap: 7px; }
+    #kelvin-orchestration .kb-command-panel { margin: 16px 24px 0; padding: 16px; background: var(--kb-panel); border: 1px solid var(--kb-border); border-radius: 10px; box-shadow: 0 10px 40px light-dark(#1e293b12, #00000024); }
+    #kelvin-orchestration .kb-command-panel input { margin-top: 12px; }
+    #kelvin-orchestration .kb-command-results { display: grid; gap: 3px; margin-top: 8px; }
+    #kelvin-orchestration .kb-command-results button { display: flex; justify-content: space-between; text-align: left; background: transparent; border: 0; padding: 10px; }
+    #kelvin-orchestration .kb-command-results button:hover { background: var(--kb-accent-bg); }
+    #kelvin-orchestration .kb-command-results button small { font-size: 11px; }
+    #kelvin-orchestration .kb-inspect-tabs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+    #kelvin-orchestration .kb-inspect-tabs button { font-size: 11px; padding: 6px 8px; background: transparent; border: 1px solid transparent; }
+    #kelvin-orchestration .kb-inspect-tabs button[aria-pressed="true"] { background: var(--kb-accent-bg); color: var(--kb-accent); }
+    #kelvin-orchestration .kb-inspect-copy { font-size: 12px; overflow-wrap: anywhere; }
+    #kelvin-orchestration .kb-inspect-copy p { margin-bottom: 9px; }
+    #kelvin-orchestration .kb-config-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; padding: 5px 8px; border: 1px solid var(--kb-border); border-radius: 5px; background: var(--kb-panel); }
+    #kelvin-orchestration .kb-config-tag strong { font-weight: 500; color: var(--kb-ink); }
+    #kelvin-orchestration .kb-team-chain { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    #kelvin-orchestration .kb-team-chain span { background: var(--kb-tint); padding: 4px 8px; border-radius: 5px; font-size: 11px; }
+    #kelvin-orchestration .kb-decision-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    #kelvin-orchestration .kb-decision-heading h2 { margin: 0; }
+    #kelvin-orchestration .kb-inline-status { font-size: 11px; color: var(--kb-green); margin-top: 8px; }
+    #kelvin-orchestration .kb-empty { padding: 22px; text-align: center; color: var(--kb-secondary); }
+    #kelvin-orchestration .kb-tight .kb-panel { padding: 12px; }
+    #kelvin-orchestration .kb-tight .kb-task { padding: 8px; }
+    #kelvin-orchestration .kb-tight main { padding: 20px; }
+    #kelvin-orchestration .kb-tight .kb-definition { gap: 6px 10px; }
+    @media (max-width: 850px) {
+      #kelvin-orchestration .kb-shell { grid-template-columns: 148px minmax(0, 1fr); }
+      #kelvin-orchestration .kb-sidebar { padding: 16px 8px; }
+      #kelvin-orchestration .kb-sidebar nav button { font-size: 11px; padding: 9px 7px; gap: 6px; }
+      #kelvin-orchestration main { padding: 22px 18px; }
+      #kelvin-orchestration .kb-columns { grid-template-columns: 1fr; }
+      #kelvin-orchestration #kb-agent-detail .kb-definition { grid-template-columns: auto minmax(0, 1fr); gap: 9px 14px; }
+      #kelvin-orchestration #kb-agent-detail dt { margin-top: 0; }
+      #kelvin-orchestration .kb-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 600px) {
+      #kelvin-orchestration .kb-shell { grid-template-columns: minmax(0, 1fr); }
+      #kelvin-orchestration .kb-sidebar { border-right: 0; border-bottom: 1px solid var(--kb-border); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 14px 12px 8px; }
+      #kelvin-orchestration .kb-new-run { width: auto; padding: 7px 10px; font-size: 12px; }
+      #kelvin-orchestration nav { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 3px; }
+      #kelvin-orchestration .kb-sidebar nav button { padding: 8px 7px; font-size: 11px; }
+      #kelvin-orchestration nav .lucide, #kelvin-orchestration nav i, #kelvin-orchestration .kb-nav-count { display: none; }
+      #kelvin-orchestration .kb-sidebar-section, #kelvin-orchestration .kb-sidebar-footer { display: none; }
+      #kelvin-orchestration .kb-topbar { padding: 9px 12px; font-size: 11px; }
+      #kelvin-orchestration .kb-command-trigger { min-width: 0; }
+      #kelvin-orchestration .kb-command-trigger kbd { display: none; }
+      #kelvin-orchestration main { padding: 20px 12px; }
+      #kelvin-orchestration .kb-command-panel { margin: 12px; }
+      #kelvin-orchestration h1 { font-size: 21px; }
+      #kelvin-orchestration .kb-grid { grid-template-columns: 1fr; }
+      #kelvin-orchestration .kb-stats-strip > div { padding-right: 13px; margin-right: 13px; }
+      #kelvin-orchestration .kb-guide { grid-template-columns: 1fr; }
+      #kelvin-orchestration .kb-guide button { justify-content: center; }
+      #kelvin-orchestration #kb-agent-detail .kb-definition { grid-template-columns: 1fr; gap: 2px; }
+      #kelvin-orchestration #kb-agent-detail dt { margin-top: 7px; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      #kelvin-orchestration button { transition: background-color 120ms ease, border-color 120ms ease; }
+    }
+    @media (pointer: coarse) {
+      #kelvin-orchestration button { min-height: 44px; }
+      #kelvin-orchestration input, #kelvin-orchestration select, #kelvin-orchestration textarea { font-size: 16px; }
+    }
+  </style>
+  <div class="kb-preview"><span>DESIGN PREVIEW</span> Sample workspace · No external jobs or messages</div>
+  <div class="kb-shell">
+    <aside class="kb-sidebar" aria-label="Workspace">
+      <div class="kb-workspace-brand"><span class="kb-workspace-mark">K</span><div><strong>Workspace</strong><small>Kelvin · Local</small></div></div>
+      <button type="button" class="kb-primary kb-new-run" data-view="new"><i data-lucide="plus" aria-hidden="true"></i>New run</button>
+      <nav aria-label="Dashboard navigation">
+        <button type="button" data-view="projects"><i data-lucide="layers" aria-hidden="true"></i>Projects</button>
+        <button type="button" data-view="runs" aria-current="page"><i data-lucide="workflow" aria-hidden="true"></i>Runs<span class="kb-nav-count">2</span></button>
+        <button type="button" data-view="configurations"><i data-lucide="sliders-horizontal" aria-hidden="true"></i>Configurations</button>
+        <button type="button" data-view="metrics"><i data-lucide="chart-no-axes-combined" aria-hidden="true"></i>Metrics</button>
+      </nav>
+      <div class="kb-sidebar-section"><span class="kb-eyebrow">PROJECTS</span><button type="button" class="kb-project-shortcut" data-view="project"><span class="kb-dot"></span>Launch controls</button><button type="button" class="kb-project-shortcut" data-view="approval"><span class="kb-dot kb-dot-amber"></span>Search quality</button></div>
+      <div class="kb-sidebar-footer"><div class="kb-row"><i data-lucide="terminal" aria-hidden="true"></i><strong>2 runtimes</strong></div><small>Claude CLI · Codex CLI</small><button type="button" class="kb-link" data-view="configurations">Manage configurations</button></div>
+    </aside>
+    <div class="kb-content">
+      <div class="kb-topbar"><div class="kb-row"><span class="kb-muted">Workspace</span><span class="kb-muted">/</span><span id="kb-breadcrumb">Runs</span></div><button type="button" class="kb-command-trigger" data-action="commands"><i data-lucide="search" aria-hidden="true"></i><span>Jump to...</span><kbd>⌘ K</kbd></button></div>
+      <section class="kb-command-panel" id="kb-command-panel" aria-label="Quick navigation" hidden>
+        <div class="kb-row kb-between"><label for="kb-command-query">Jump to a page or action</label><button type="button" data-action="close-commands" aria-label="Close quick navigation"><i data-lucide="x" aria-hidden="true"></i></button></div>
+        <input id="kb-command-query" type="search" placeholder="Projects, runs, new run, metrics..." autocomplete="off">
+        <div id="kb-command-results" class="kb-command-results"></div>
+      </section>
+      <div class="kb-toast" id="kb-notification" role="status" hidden></div>
+  <main id="kb-main">
+    <section data-page="projects">
+      <div class="kb-heading kb-row kb-between"><div><h1>Projects</h1><span class="kb-muted">What is moving, and what needs you.</span></div><div class="kb-row"><button type="button" data-action="existing-page">Shipped</button><button type="button" data-action="existing-page">Archived</button></div></div>
+      <div class="kb-stats-strip"><div><strong>2</strong><small>Active projects</small></div><div><strong>1</strong><small>Run in progress</small></div><div><strong id="kb-project-decision-count">1</strong><small>Needs your decision</small></div></div>
+      <div class="kb-notice" id="kb-project-attention"><strong>Needs your decision</strong><br>Search improvements has a verified POC and ticket package ready. <button class="kb-link" type="button" data-view="approval">Review go/no-go</button></div>
+      <div class="kb-grid">
+        <article class="kb-panel">
+          <div class="kb-row kb-between"><h2>Agent launch controls</h2><span class="kb-badge kb-working">Implement</span></div>
+          <p class="kb-muted">Launch configured agents and inspect their work.</p>
+          <small>Project progress · 3 of 8 stations complete</small><div class="kb-meter"><span style="width:37.5%"></span></div>
+          <div class="kb-line"></div>
+          <div class="kb-row kb-between"><div><strong id="kb-launch-run-summary">1 active run · 3 agents</strong><small>2 tasks running · 1 waiting on a dependency</small></div><button type="button" data-view="project">Open project</button></div>
+        </article>
+        <article class="kb-panel">
+          <div class="kb-row kb-between"><h2>Search improvements</h2><span class="kb-badge kb-waiting" id="kb-search-project-status">Needs decision</span></div>
+          <p class="kb-muted">Improve search ranking and capture verification evidence.</p>
+          <small>Project progress · 2 of 8 stations complete</small><div class="kb-meter"><span style="width:25%"></span></div>
+          <div class="kb-line"></div>
+          <div class="kb-row kb-between"><div><strong id="kb-search-run-status">1 waiting run</strong><small id="kb-search-run-next">Spec &amp; Tickets · Go/no-go package ready</small></div><button type="button" data-view="approval">Review run</button></div>
+        </article>
+      </div>
+    </section>
+    <section data-page="project" hidden>
+      <div class="kb-heading kb-row kb-between"><div><small>Projects / Agent launch controls</small><h1>Agent launch controls</h1><span class="kb-badge kb-working">Implement</span></div><button type="button" data-view="new">New run for this project</button></div>
+      <div class="kb-columns">
+        <div class="kb-stack">
+          <div class="kb-panel"><h2>Active run</h2><p><strong>Implement the launch controls</strong><br><span class="kb-muted">Orchestrator: Claude / Opus · high</span></p><div class="kb-row"><span class="kb-badge kb-working">Running</span><span>3 agents · 18m elapsed</span></div><div class="kb-line"></div><p>Validating the configuration schema while two independent implementation tasks run.</p><button type="button" data-view="run">Inspect run and agents</button></div>
+          <div class="kb-panel"><h2>Project stations</h2><div class="kb-stations"><span>✓ POC</span><span>✓ Verify</span><span>✓ Spec &amp; Tickets</span><span class="kb-current">4 · Implement</span><span>5 · Converge</span><span>6 · Regression</span><span>7 · Ship</span><span>8 · Cleanup</span></div><small>Project-level progress stays here. Parallel tasks live inside each run.</small></div>
+          <div class="kb-panel"><h2>Run history</h2><div class="kb-row kb-between"><span>Verify configuration defaults <small>Completed · 9m · 42k tokens</small></span><button type="button" class="kb-link" data-view="runs">All project runs</button></div></div>
+        </div>
+        <div class="kb-stack">
+          <div class="kb-panel"><h2>Project context</h2><dl class="kb-definition"><dt>Repository</dt><dd>projects-board</dd><dt>PR lanes</dt><dd>Schema → Launch controls → Activity view</dd><dt>Reviewable</dt><dd>Configuration schema</dd></dl><button type="button" class="kb-link" data-action="existing-page">Session history</button></div>
+          <div class="kb-panel"><h2>Evidence and artifacts</h2><p>Existing plans, PR links, recordings, and tested evidence remain attached to the project.</p><button type="button" data-view="metrics">Project metrics</button></div>
+        </div>
+      </div>
+    </section>
+    <section data-page="runs" hidden>
+      <div class="kb-heading kb-row kb-between"><div><h1>Runs</h1><span class="kb-muted">Every agent. Every task. One place to follow the work.</span></div><button type="button" class="kb-primary" data-view="new">New run</button></div>
+      <div class="kb-stats-strip"><div><strong id="kb-running-count">1</strong><small>Running</small></div><div><strong id="kb-waiting-count">1</strong><small>Needs you</small></div><div><strong id="kb-queued-count">0</strong><small>Queued</small></div></div>
+      <div class="kb-row"><label>Project<select id="kb-run-project"><option value="all">All projects</option><option value="launch">Agent launch controls</option><option value="search">Search improvements</option></select></label><label>Status<select id="kb-run-status"><option value="all">All statuses</option><option value="running">Running</option><option value="waiting">Waiting for you</option><option value="queued">Queued</option></select></label></div>
+      <div class="kb-table-wrap" style="margin-top:16px"><table><thead><tr><th>Run / project</th><th>Status</th><th>Orchestrator</th><th>Agents</th><th>Elapsed / tokens</th></tr></thead><tbody id="kb-runs-body"></tbody></table></div>
+    </section>
+    <section data-page="run" hidden>
+      <div class="kb-heading"><small>RUN-024 · Agent launch controls</small><h1 id="kb-run-title">Implement the launch controls</h1><div class="kb-row kb-between"><div class="kb-row"><span class="kb-badge kb-working">● Running</span><span class="kb-muted">18m elapsed · 3 agents · 126k tokens</span></div><button type="button" class="kb-config-tag" data-action="snapshot"><i data-lucide="sliders-horizontal" aria-hidden="true"></i><strong>Custom team</strong>v2</button></div></div>
+      <div class="kb-panel kb-console"><div class="kb-row kb-between"><div class="kb-row"><span class="kb-avatar">OR</span><div><h2>Orchestrator</h2><small>Claude / Opus · high</small></div></div><span class="kb-config-tag"><span class="kb-dot"></span>Updated 4s ago</span></div><p class="kb-console-progress">Two implementation tasks are running independently. The activity view is waiting for the event storage schema.</p><small class="kb-console-next"><strong>Up next</strong> · Dispatch Task 14 after Task 13 completes, then verify all results before Converge.</small>
+        <form id="kb-guidance-form" class="kb-guide"><label for="kb-guidance">Guide the orchestrator</label><input id="kb-guidance" placeholder="Add context or clarify a constraint..." required><button type="submit"><i data-lucide="arrow-up" aria-hidden="true"></i>Send guidance</button></form><div id="kb-guidance-status" class="kb-inline-status" role="status" hidden></div>
+      </div>
+      <div class="kb-stations"><span>✓ POC</span><span>✓ Verify</span><span>✓ Spec &amp; Tickets</span><span class="kb-current">Implement</span><span>Converge</span><span>Regression</span><span>Ship</span><span>Cleanup</span></div>
+      <div class="kb-columns">
+        <div class="kb-stack">
+          <div class="kb-panel"><h2>Tasks and assignments</h2>
+            <button type="button" class="kb-task" data-agent="launch" aria-pressed="true"><div class="kb-row kb-between"><strong>Task 12 · Launch form</strong><span class="kb-badge kb-working">Running</span></div><small>Implementer 1 · Claude / Opus · high</small><small>Action: editing form validation · Worktree: ticket-12</small></button>
+            <button type="button" class="kb-task" data-agent="events" aria-pressed="false"><div class="kb-row kb-between"><strong>Task 13 · Event storage</strong><span class="kb-badge kb-working">Running</span></div><small>Implementer 2 · Codex / runtime default · high</small><small>Action: running persistence tests · Worktree: ticket-13</small></button>
+            <button type="button" class="kb-task" data-agent="activity" aria-pressed="false"><div class="kb-row kb-between"><strong>Task 14 · Activity view</strong><span class="kb-badge kb-waiting">Waiting</span></div><small>Depends on Task 13 · No agent assigned yet</small></button>
+          </div>
+          <div class="kb-panel"><div class="kb-row kb-between"><h2>Activity</h2><small>Most recent first</small></div><ol class="kb-events" id="kb-activity-events"><li><time>14:32:04</time>Implementer 2 started persistence tests.</li><li><time>14:31:58</time>Orchestrator confirmed Task 14 depends on Task 13.</li><li><time>14:31:41</time>Implementer 1 updated form validation.</li><li><time>14:30:19</time>Orchestrator dispatched two independent tasks.</li></ol></div>
+        </div>
+        <aside class="kb-stack">
+          <div class="kb-panel" id="kb-agent-detail" aria-live="polite"></div>
+          <div class="kb-panel"><h2>Run context</h2><div class="kb-inspect-tabs" aria-label="Run context views"><button type="button" data-inspect="decision" aria-pressed="true">Decisions</button><button type="button" data-inspect="artifacts" aria-pressed="false">Evidence</button><button type="button" data-inspect="output" aria-pressed="false">Output</button></div><div class="kb-inspect-copy" id="kb-inspect-content" aria-live="polite"></div></div>
+        </aside>
+      </div>
+    </section>
+    <section data-page="approval" hidden>
+      <div class="kb-heading"><small>RUN-023 · Search improvements</small><h1 id="kb-decision-title">Ready for your decision</h1><span class="kb-badge kb-waiting" id="kb-approval-status">Waiting for go/no-go</span></div>
+      <div class="kb-columns">
+        <div class="kb-panel"><div class="kb-decision-heading"><span class="kb-avatar"><i data-lucide="git-pull-request" aria-hidden="true"></i></span><h2>Spec &amp; Tickets checkpoint</h2></div><p>The POC has been verified. The proposed implementation is split into three dependency-aware tickets.</p><dl class="kb-definition"><dt>Evidence</dt><dd>Recorded scenario and targeted checks</dd><dt>Spec</dt><dd>Search behavior and acceptance criteria</dd><dt>Ticket package</dt><dd>Ranking module → integration → regression coverage</dd><dt>Independent review</dt><dd>Ticket structure assessed; findings resolved</dd><dt>Decision scope</dt><dd>Publish the reviewed tickets and begin implementation</dd></dl><div class="kb-line"></div><div class="kb-row" id="kb-approval-actions"><button type="button" class="kb-primary" data-action="approve">Approve and continue</button><button type="button" data-action="changes">Request changes</button></div><form id="kb-changes-form" class="kb-stack" style="margin-top:14px" hidden><label>What should change?<textarea id="kb-changes-input" required placeholder="Describe the change to the reviewed package..."></textarea></label><button type="submit">Send requested changes</button></form><div id="kb-decision-result" class="kb-inline-status" role="status" hidden></div></div>
+        <div class="kb-panel"><h2>Run status</h2><p id="kb-decision-summary">Human decision required</p><small>Agents have completed the checkpoint package. Waiting time is tracked separately from active work.</small><div class="kb-line"></div><p>Approval belongs to this run and this exact package. A saved preset cannot approve future work.</p></div>
+      </div>
+    </section>
+    <section data-page="new" hidden>
+      <div class="kb-heading"><h1>New run</h1><span class="kb-muted">Describe the work, choose a team, and inspect the effective configuration.</span></div>
+      <form id="kb-launch-form" class="kb-stack">
+        <div class="kb-panel kb-stack"><label>What should the orchestrator do?<textarea id="kb-prompt" required placeholder="Describe the outcome you want. Add constraints, references, or a ticket..."></textarea></label><div class="kb-grid"><label>Project<select id="kb-project"><option>Agent launch controls</option><option>Search improvements</option></select></label><label>Configuration<select id="kb-preset"><option>Skill defaults</option><option>Custom team</option></select></label></div><label>Repository / working directory<input id="kb-directory" value="~/.claude/projects-board" required></label><div class="kb-row"><span class="kb-config-tag"><i data-lucide="workflow" aria-hidden="true"></i>kelvin-implement</span><span class="kb-config-tag"><i data-lucide="git-branch" aria-hidden="true"></i>Isolated worktrees</span><small>Draft retained while navigating</small></div></div>
+        <div class="kb-panel"><h2>Orchestrator</h2><div class="kb-fields"><label>Runtime<select id="kb-runtime"><option>Claude</option><option>Codex</option></select></label><label>Model<select id="kb-model"><option>Opus</option><option>Runtime default</option></select></label><label>Effort<select id="kb-effort"><option>Inherit runtime setting</option><option selected>high</option><option>medium</option><option>low</option></select></label></div>
+          <details><summary>Role overrides and execution limits</summary><div class="kb-table-wrap"><table><thead><tr><th>Role</th><th>Runtime / model</th><th>Effort</th></tr></thead><tbody id="kb-launch-roles"></tbody></table></div><div class="kb-grid" style="margin-top:16px"><label>Maximum active workers<input id="kb-workers" type="number" min="1" max="16" value="3"></label><label>Token budget (optional)<input id="kb-budget" type="number" min="1" placeholder="No limit configured"></label></div></details>
+        </div>
+        <div class="kb-panel"><h2>Ready to launch</h2><p id="kb-resolved"></p><small>Preview inventory: Claude and Codex CLIs. The app will validate model access, effort settings, and role dispatch before a real launch.</small><div class="kb-line"></div><div class="kb-row kb-between"><span class="kb-muted">Go/no-go checkpoint retained</span><button type="submit" class="kb-primary">Queue preview run</button></div></div>
+      </form>
+    </section>
+    <section data-page="queued" hidden>
+      <div class="kb-heading"><small>PREVIEW RUN</small><h1 id="kb-queued-title">Run queued</h1><span class="kb-badge" id="kb-queued-status">Queued</span></div>
+      <div class="kb-panel"><h2>Configuration captured</h2><div id="kb-queued-snapshot"></div><div class="kb-line"></div><small>This is a local preview record. No runtime process has started.</small><div class="kb-row" style="margin-top:16px"><button type="button" data-view="runs">View all runs</button><button type="button" data-view="new">Configure another run</button></div></div>
+    </section>
+    <section data-page="configurations" hidden>
+      <div class="kb-heading"><h1>Configurations</h1><span class="kb-muted">Reusable teams, role assignments, and execution defaults.</span></div>
+      <div class="kb-columns">
+        <div class="kb-panel"><div class="kb-row kb-between"><h2>Skill defaults</h2><span class="kb-badge">Version 1</span></div><p class="kb-muted">Preserves the current kelvin-implement model choices.</p><dl class="kb-definition"><dt>Orchestrator</dt><dd>Chosen at launch</dd><dt>Implementer</dt><dd>Claude / Opus / inherited effort</dd><dt>PR and fix author</dt><dd>Claude / Opus / inherited effort</dd><dt>Independent adjudicator</dt><dd>Codex / configured default</dd><dt>Other roles</dt><dd>Inherit orchestrator unless overridden</dd><dt>Go/no-go</dt><dd>Required after the verified POC and ticket package</dd></dl><div class="kb-row"><button type="button" data-action="use-preset">Use configuration</button><button type="button" data-action="custom">Duplicate and customize</button></div></div>
+        <div class="kb-panel"><h2>Runtimes</h2><p><strong>Claude CLI</strong><small>Installed · Authentication and model access checked at launch</small></p><p><strong>Codex CLI</strong><small>Installed · Authentication and model access checked at launch</small></p><div class="kb-line"></div><h3>Per-run record</h3><p>Each run keeps its resolved model, effort, role assignments, skill version, and execution limits.</p><small>Editing this configuration affects future launches.</small></div>
+      </div>
+      <div class="kb-panel" style="margin-top:18px"><h2>Workflow roles</h2><div class="kb-table-wrap"><table><thead><tr><th>Role</th><th>Owns</th></tr></thead><tbody><tr><td>Orchestrator</td><td>Plan, dependencies, delegation, synthesis, and phase transitions</td></tr><tr><td>Researcher / POC builder</td><td>Explore the code and prove the approach</td></tr><tr><td>Spec and ticket planner</td><td>Acceptance criteria and implementation slices</td></tr><tr><td>Implementer</td><td>One ready ticket in its own worktree</td></tr><tr><td>Verifier</td><td>Checks, live behavior, and evidence</td></tr><tr><td>Reviewer</td><td>Standards, spec conformance, and review findings</td></tr><tr><td>Independent adjudicator</td><td>Read-only second opinion on plans and findings</td></tr><tr><td>PR / fix author</td><td>Draft PRs and execute fixes decided by the orchestrator</td></tr></tbody></table></div></div>
+    </section>
+    <section data-page="metrics" hidden>
+      <div class="kb-heading kb-row kb-between"><div><h1>Metrics</h1><span class="kb-muted">Where work, waiting, and tokens go.</span></div><label>Project<select id="kb-metrics-project"><option value="all">All projects</option><option value="launch">Agent launch controls</option></select></label></div>
+      <small>Illustrative last 30 days · Finished runs only · Token telemetry coverage: 100% of this sample</small>
+      <div class="kb-stat-grid"><div class="kb-panel"><small>Completed / finished</small><div class="kb-value" id="kb-completed">19 / 24</div><small id="kb-success">79.2% success</small></div><div class="kb-panel"><small>Median active time</small><div class="kb-value" id="kb-duration">21m</div><small>Waiting excluded</small></div><div class="kb-panel"><small>Token usage</small><div class="kb-value" id="kb-tokens">2.40M</div><small>Input and output combined</small></div><div class="kb-panel"><small>Estimated cost</small><div class="kb-value">Unknown</div><small>Price data required</small></div></div>
+      <div class="kb-grid">
+        <div class="kb-panel"><h2>Token usage by role</h2><div id="kb-role-metrics"></div></div>
+        <div class="kb-panel"><h2>Time and outcomes</h2><dl class="kb-definition" id="kb-time-metrics"></dl><div class="kb-line"></div><small>Drill down by project, run, model, configuration, role, or workflow phase. Model comparisons should include task type and success rate.</small></div>
+      </div>
+    </section>
+  </main>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const root = document.getElementById('kelvin-orchestration');
+      const state = { page: 'run', density: 'Comfortable', accent: 'Indigo', inspector: 'decision' };
+      let previewSequence = 25;
+      let commandReturnFocus = null;
+      const roleNames = ['Researcher / POC builder', 'Spec and ticket planner', 'Implementer', 'Verifier', 'Reviewer', 'Independent adjudicator', 'PR / fix author'];
+      const agents = {
+        launch: { name: 'Implementer 1', status: 'Running', role: 'Implementer', runtime: 'Claude / Opus', effort: 'high (inherited)', task: 'Task 12 · Launch form', action: 'Editing form validation', elapsed: '11m active', tokens: '41,200', worktree: 'ticket-12', event: '4s ago' },
+        events: { name: 'Implementer 2', status: 'Running', role: 'Implementer', runtime: 'Codex / runtime default', effort: 'high (override)', task: 'Task 13 · Event storage', action: 'Running persistence tests', elapsed: '9m active', tokens: '52,100', worktree: 'ticket-13', event: '7s ago' },
+        activity: { name: 'Task 14', status: 'Waiting on dependency', role: 'Implementer', runtime: 'Not assigned', effort: 'From configuration at dispatch', task: 'Activity view', action: 'Waiting for Task 13 to complete', elapsed: '0m active · 8m waiting', tokens: 'No usage yet', worktree: 'Not created', event: 'Dependency confirmed 6s ago' }
+      };
+      const runs = [
+        { title: 'Implement the launch controls', project: 'Agent launch controls', key: 'launch', status: 'running', label: 'Running', runtime: 'Claude / Opus', agents: '3', duration: '18m / 126k', page: 'run' },
+        { title: 'Verify search and prepare tickets', project: 'Search improvements', key: 'search', status: 'waiting', label: 'Waiting for you', runtime: 'Codex / runtime default', agents: '1', duration: '42m / 82k', page: 'approval' }
+      ];
+      const commandItems = [
+        { label: 'New run', page: 'new', detail: 'Launch with a configuration' },
+        { label: 'Projects', page: 'projects', detail: 'Progress and needs action' },
+        { label: 'Runs', page: 'runs', detail: 'All execution' },
+        { label: 'Inspect active run', page: 'run', detail: 'Tasks and agents' },
+        { label: 'Agent launch controls', page: 'project', detail: 'Project' },
+        { label: 'Review decision', page: 'approval', detail: 'Search improvements' },
+        { label: 'Configurations', page: 'configurations', detail: 'Models, effort, and roles' },
+        { label: 'Metrics', page: 'metrics', detail: 'Usage and outcomes' }
+      ];
+      function escapeText(value) { return String(value).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+      function notify(text) { const node = root.querySelector('#kb-notification'); node.textContent = text; node.hidden = false; }
+      function navigate(page) {
+        if (state.page === 'project') {
+          if (page === 'new') root.querySelector('#kb-project').value = 'Agent launch controls';
+          if (page === 'metrics') { root.querySelector('#kb-metrics-project').value = 'launch'; renderMetrics(); }
+          if (page === 'runs') { root.querySelector('#kb-run-project').value = 'launch'; root.querySelector('#kb-run-status').value = 'all'; renderRuns(); }
+        }
+        state.page = page;
+        root.querySelectorAll('[data-page]').forEach(function (node) { node.hidden = node.dataset.page !== page; });
+        const selected = ['project'].includes(page) ? 'projects' : ['run', 'approval', 'new', 'queued'].includes(page) ? 'runs' : page;
+        root.querySelectorAll('nav [data-view]').forEach(function (node) { if (node.dataset.view === selected) node.setAttribute('aria-current', 'page'); else node.removeAttribute('aria-current'); });
+        root.querySelector('#kb-breadcrumb').textContent = { projects: 'Projects', project: 'Projects / Launch controls', runs: 'Runs', run: 'Runs / RUN-024', approval: 'Runs / Decision', new: 'Runs / New run', queued: 'Runs / Preview', configurations: 'Configurations', metrics: 'Metrics' }[page] || 'Workspace';
+        root.querySelector('#kb-command-panel').hidden = true;
+        root.querySelector('#kb-notification').hidden = true;
+      }
+      function renderCommands() {
+        const query = root.querySelector('#kb-command-query').value.trim().toLowerCase();
+        const matches = commandItems.filter(function (item) { return (item.label + ' ' + item.detail).toLowerCase().includes(query); });
+        root.querySelector('#kb-command-results').innerHTML = matches.map(function (item) { return '<button type="button" data-command-page="' + item.page + '"><span>' + item.label + '</span><small>' + item.detail + '</small></button>'; }).join('') || '<p class="kb-empty" role="status">No matching actions</p>';
+      }
+      function openCommands() {
+        if (!root.querySelector('#kb-command-panel').hidden) { closeCommands(); return; }
+        commandReturnFocus = document.activeElement;
+        root.querySelector('#kb-command-panel').hidden = false;
+        root.querySelector('#kb-command-query').value = '';
+        renderCommands();
+        root.querySelector('#kb-command-query').focus();
+      }
+      function closeCommands() {
+        root.querySelector('#kb-command-panel').hidden = true;
+        if (commandReturnFocus && root.contains(commandReturnFocus)) commandReturnFocus.focus();
+      }
+      function renderInspector(kind) {
+        state.inspector = kind;
+        root.querySelectorAll('[data-inspect]').forEach(function (node) { node.setAttribute('aria-pressed', String(node.dataset.inspect === kind)); });
+        const content = {
+          decision: '<p><strong>Parallelize Tasks 12 and 13</strong></p><p>They touch separate modules and can be verified independently.</p><small>Orchestrator · 14:30:19</small><div class="kb-line"></div><p><strong>Task 14 waits for Task 13</strong></p><p>The activity view consumes the event schema. Dispatch after the schema checks pass.</p><small>Orchestrator · 14:31:58</small>',
+          artifacts: '<p><strong>Configuration schema</strong><small>Diff · Task 13 · 2 files</small></p><p><strong>Persistence checks</strong><small>Test output · 8 passed in sample</small></p><p><strong>Verified POC</strong><small>Recording · Linked to project evidence</small></p><div class="kb-line"></div><small>Artifacts retain task, attempt, and repository revision.</small>',
+          output: '<p><strong>Latest normalized events</strong></p><p><code>14:32:04 check.started</code><small>Task 13 · Implementer 2</small></p><p><code>14:31:58 dependency.confirmed</code><small>Task 14 → Task 13</small></p><p><code>14:31:41 artifact.updated</code><small>Task 12 · Form validation</small></p><div class="kb-line"></div><small>Sample events. Full raw provider output belongs in the runtime event store.</small>',
+          snapshot: '<p><strong>Custom team · version 2</strong></p><p>Orchestrator: Claude / Opus / high</p><p>Task 13 override: Codex / runtime default / high</p><p>Other implementers: Claude / Opus / inherited effort</p><div class="kb-line"></div><small>Requested configuration shown. Actual model IDs, CLI versions, and skill hash are recorded by the real runner.</small>'
+        };
+        root.querySelector('#kb-inspect-content').innerHTML = content[kind];
+      }
+      function renderAgent(key) {
+        const a = agents[key];
+        root.querySelectorAll('[data-agent]').forEach(function (node) { node.setAttribute('aria-pressed', String(node.dataset.agent === key)); });
+        const fields = [['Role', a.role], ['Runtime / model', a.runtime], ['Effort', a.effort], ['Task', a.task], ['Current action', a.action], ['Time', a.elapsed], ['Tokens', a.tokens], ['Worktree', a.worktree], ['Last activity', a.event]];
+        root.querySelector('#kb-agent-detail').innerHTML = '<h2>' + a.name + '</h2><span class="kb-badge ' + (key === 'activity' ? 'kb-waiting' : 'kb-working') + '">' + a.status + '</span><dl class="kb-definition">' + fields.map(function (f) { return '<dt>' + f[0] + '</dt><dd>' + f[1] + '</dd>'; }).join('') + '</dl>';
+      }
+      function renderRuns() {
+        const project = root.querySelector('#kb-run-project').value;
+        const status = root.querySelector('#kb-run-status').value;
+        const filtered = runs.filter(function (r) { return (project === 'all' || r.key === project) && (status === 'all' || r.status === status); });
+        root.querySelector('#kb-runs-body').innerHTML = filtered.map(function (r) { return '<tr><td><button type="button" class="kb-link" data-view="' + r.page + '"' + (r.previewId ? ' data-preview-id="' + r.previewId + '"' : '') + '>' + escapeText(r.title) + '</button><small>' + escapeText(r.project) + '</small></td><td><span class="kb-badge ' + (r.status === 'running' ? 'kb-working' : r.status === 'waiting' ? 'kb-waiting' : '') + '">' + r.label + '</span></td><td>' + escapeText(r.runtime) + '</td><td>' + r.agents + '</td><td>' + r.duration + '</td></tr>'; }).join('') || '<tr><td colspan="5" class="kb-empty">No runs match these filters.</td></tr>';
+        const waiting = runs.filter(function (r) { return r.status === 'waiting'; }).length;
+        root.querySelector('#kb-running-count').textContent = String(runs.filter(function (r) { return r.status === 'running'; }).length);
+        root.querySelector('#kb-waiting-count').textContent = String(waiting);
+        root.querySelector('#kb-queued-count').textContent = String(runs.filter(function (r) { return r.status === 'queued'; }).length);
+        root.querySelector('#kb-project-decision-count').textContent = String(waiting);
+        root.querySelector('#kb-project-attention').hidden = waiting === 0;
+        root.querySelector('.kb-nav-count').textContent = String(runs.length);
+        const launchQueued = runs.filter(function (r) { return r.key === 'launch' && r.status === 'queued'; }).length;
+        root.querySelector('#kb-launch-run-summary').textContent = launchQueued ? '1 running · ' + launchQueued + ' queued' : '1 active run · 3 agents';
+        const searchRuns = runs.filter(function (r) { return r.key === 'search'; });
+        const searchWaiting = searchRuns.filter(function (r) { return r.status === 'waiting'; }).length;
+        const searchQueued = searchRuns.filter(function (r) { return r.status === 'queued'; }).length;
+        root.querySelector('#kb-search-run-status').textContent = [searchWaiting ? searchWaiting + ' waiting' : '', searchQueued ? searchQueued + ' queued' : ''].filter(Boolean).join(' · ') + ' run' + (searchRuns.length === 1 ? '' : 's');
+      }
+      function showPreviewRun(run) {
+        root.querySelector('#kb-queued-title').textContent = run.title;
+        const snapshot = run.snapshot;
+        root.querySelector('#kb-queued-snapshot').innerHTML = '<dl class="kb-definition"><dt>Project</dt><dd>' + escapeText(run.project) + '</dd><dt>Orchestrator</dt><dd>' + escapeText(run.runtime + ' / ' + snapshot.effort) + '</dd><dt>Configuration</dt><dd>' + escapeText(snapshot.preset) + '</dd><dt>Working directory</dt><dd>' + escapeText(snapshot.directory) + '</dd><dt>Active worker limit</dt><dd>' + escapeText(snapshot.workers) + '</dd><dt>Token budget</dt><dd>' + escapeText(snapshot.budget || 'Not configured') + '</dd></dl><div class="kb-line"></div><h3>Role assignments</h3><div class="kb-table-wrap"><table><thead><tr><th>Role</th><th>Model / effort</th></tr></thead><tbody>' + snapshot.roles.map(function (role) { return '<tr><td>' + escapeText(role.name) + '</td><td>' + escapeText(role.model + ' / ' + role.effort) + '</td></tr>'; }).join('') + '</tbody></table></div>';
+        navigate('queued');
+      }
+      function recordDecision(approved, feedback) {
+        const run = runs.find(function (item) { return item.key === 'search' && !item.previewId; });
+        run.status = 'queued'; run.label = 'Queued'; run.agents = '0';
+        root.querySelector('#kb-decision-title').textContent = approved ? 'Package approved' : 'Changes requested';
+        const decisionCommand = commandItems.find(function (item) { return item.page === 'approval'; });
+        decisionCommand.label = 'Decision record';
+        decisionCommand.detail = approved ? 'Search improvements · Approved' : 'Search improvements · Changes requested';
+        root.querySelector('#kb-approval-status').textContent = approved ? 'Approved · continuation queued' : 'Changes requested · revision queued';
+        root.querySelector('#kb-approval-status').className = 'kb-badge';
+        root.querySelector('#kb-decision-summary').textContent = approved ? 'Continuation queued in preview' : 'Package revision queued in preview';
+        root.querySelector('#kb-approval-actions').hidden = true;
+        root.querySelector('#kb-changes-form').hidden = true;
+        root.querySelector('#kb-decision-result').textContent = approved ? 'Preview approval recorded for this package. No tickets were published and no runtime was started.' : 'Preview feedback recorded: ' + feedback;
+        root.querySelector('#kb-decision-result').hidden = false;
+        root.querySelector('#kb-search-project-status').textContent = approved ? 'Implementation queued' : 'Revision queued';
+        root.querySelector('#kb-search-project-status').className = 'kb-badge';
+        root.querySelector('#kb-search-run-status').textContent = '1 queued run';
+        root.querySelector('#kb-search-run-next').textContent = approved ? 'Approved package · Ready to continue' : 'Spec & Tickets · Changes requested';
+        renderRuns();
+      }
+      root.querySelector('#kb-launch-roles').innerHTML = roleNames.map(function (name, index) {
+        const defaultValue = name === 'Independent adjudicator' ? 'Codex / runtime default' : ['Implementer', 'PR / fix author'].includes(name) ? 'Claude / Opus' : 'Inherit orchestrator';
+        const options = ['Inherit orchestrator', 'Claude / Opus', 'Codex / runtime default'].map(function (value) { return '<option' + (value === defaultValue ? ' selected' : '') + '>' + value + '</option>'; }).join('');
+        return '<tr><td>' + name + '</td><td><select aria-label="' + name + ' model" data-role-model="' + index + '">' + options + '</select></td><td><select aria-label="' + name + ' effort" data-role-effort="' + index + '"><option>Inherit</option><option>high</option><option>medium</option><option>low</option></select></td></tr>';
+      }).join('');
+      function applyPreset(name) {
+        root.querySelector('#kb-preset').value = name;
+        if (name === 'Skill defaults') {
+          root.querySelectorAll('[data-role-model]').forEach(function (node) {
+            const role = roleNames[Number(node.dataset.roleModel)];
+            node.value = role === 'Independent adjudicator' ? 'Codex / runtime default' : ['Implementer', 'PR / fix author'].includes(role) ? 'Claude / Opus' : 'Inherit orchestrator';
+          });
+          root.querySelectorAll('[data-role-effort]').forEach(function (node) { node.value = 'Inherit'; });
+          root.querySelector('#kb-workers').value = '3';
+          root.querySelector('#kb-budget').value = '';
+        }
+        updateResolved();
+      }
+      function updateResolved() {
+        const runtime = root.querySelector('#kb-runtime').value;
+        const model = root.querySelector('#kb-model').value;
+        const effort = root.querySelector('#kb-effort').value;
+        const inherited = Array.from(root.querySelectorAll('[data-role-model]')).filter(function (node) { return node.value === 'Inherit orchestrator'; }).length;
+        root.querySelector('#kb-resolved').textContent = runtime + ' / ' + model + ' / ' + effort + '. ' + inherited + ' roles inherit this model. All explicit role overrides are included in the run snapshot.';
+      }
+      function renderMetrics() {
+        const project = root.querySelector('#kb-metrics-project').value === 'launch';
+        root.querySelector('#kb-completed').textContent = project ? '7 / 8' : '19 / 24';
+        root.querySelector('#kb-success').textContent = project ? '87.5% success' : '79.2% success';
+        root.querySelector('#kb-duration').textContent = project ? '18m' : '21m';
+        root.querySelector('#kb-tokens').textContent = project ? '800k' : '2.40M';
+        const values = project ? [['Orchestrator', 140], ['Implementer', 440], ['Reviewer / adjudicator', 160], ['Verification / other', 60]] : [['Orchestrator', 420], ['Implementer', 1320], ['Reviewer / adjudicator', 480], ['Verification / other', 180]];
+        const total = values.reduce(function (sum, row) { return sum + row[1]; }, 0);
+        root.querySelector('#kb-role-metrics').innerHTML = values.map(function (row) { return '<div style="margin:13px 0"><div class="kb-row kb-between"><span>' + row[0] + '</span><span>' + row[1].toLocaleString() + 'k tokens</span></div><div class="kb-meter"><span style="width:' + row[1] / total * 100 + '%"></span></div></div>'; }).join('');
+        const timeRows = project ? [['Median wait for human', '12m'], ['Median CI wait', '4m'], ['Median convergence passes', '1'], ['Retries', '2'], ['Failed / cancelled', '1 / 0']] : [['Median wait for human', '34m'], ['Median CI wait', '6m'], ['Median convergence passes', '2'], ['Retries', '7'], ['Failed / cancelled', '3 / 2']];
+        root.querySelector('#kb-time-metrics').innerHTML = timeRows.map(function (row) { return '<dt>' + row[0] + '</dt><dd>' + row[1] + '</dd>'; }).join('');
+      }
+      root.addEventListener('click', function (event) {
+        const button = event.target.closest('button');
+        if (!button || !root.contains(button)) return;
+        if (button.dataset.previewId) { showPreviewRun(runs.find(function (run) { return run.previewId === button.dataset.previewId; })); return; }
+        if (button.dataset.commandPage) {
+          navigate(button.dataset.commandPage);
+          const firstControl = root.querySelector('[data-page="' + button.dataset.commandPage + '"] button, [data-page="' + button.dataset.commandPage + '"] input, [data-page="' + button.dataset.commandPage + '"] textarea, [data-page="' + button.dataset.commandPage + '"] select');
+          if (firstControl) firstControl.focus();
+          return;
+        }
+        if (button.dataset.view) {
+          navigate(button.dataset.view);
+        }
+        if (button.dataset.agent) renderAgent(button.dataset.agent);
+        if (button.dataset.inspect) renderInspector(button.dataset.inspect);
+        if (button.dataset.action === 'snapshot') renderInspector('snapshot');
+        if (button.dataset.action === 'commands') openCommands();
+        if (button.dataset.action === 'close-commands') closeCommands();
+        if (button.dataset.action === 'existing-page') notify('Your existing shipped, archived, and session-history pages remain available from these links.');
+        if (button.dataset.action === 'approve') recordDecision(true, '');
+        if (button.dataset.action === 'changes') { root.querySelector('#kb-changes-form').hidden = false; root.querySelector('#kb-changes-input').focus(); }
+        if (button.dataset.action === 'use-preset') { applyPreset('Skill defaults'); navigate('new'); }
+        if (button.dataset.action === 'custom') { applyPreset('Skill defaults'); applyPreset('Custom team'); root.querySelector('details').open = true; navigate('new'); }
+      });
+      root.querySelector('#kb-runtime').addEventListener('change', function () {
+        root.querySelector('#kb-model').innerHTML = this.value === 'Codex' ? '<option>Runtime default</option>' : '<option>Opus</option><option>Runtime default</option>';
+        updateResolved();
+      });
+      root.querySelector('#kb-launch-form').addEventListener('change', function (event) {
+        if (event.target.id === 'kb-preset') applyPreset(event.target.value);
+        else {
+          if (event.target.hasAttribute('data-role-model') || event.target.hasAttribute('data-role-effort') || ['kb-workers', 'kb-budget'].includes(event.target.id)) root.querySelector('#kb-preset').value = 'Custom team';
+          updateResolved();
+        }
+      });
+      root.querySelector('#kb-launch-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const prompt = root.querySelector('#kb-prompt').value.trim();
+        if (!prompt) { root.querySelector('#kb-prompt').setCustomValidity('Describe the work to launch.'); root.querySelector('#kb-prompt').reportValidity(); return; }
+        const project = root.querySelector('#kb-project').value;
+        const runtime = root.querySelector('#kb-runtime').value + ' / ' + root.querySelector('#kb-model').value;
+        const effort = root.querySelector('#kb-effort').value;
+        const run = {
+          title: prompt, project: project, key: project === 'Agent launch controls' ? 'launch' : 'search',
+          status: 'queued', label: 'Queued', runtime: runtime, agents: '0', duration: '0m / no usage',
+          page: 'queued', previewId: String(previewSequence++),
+          snapshot: {
+            effort: effort, preset: root.querySelector('#kb-preset').value, directory: root.querySelector('#kb-directory').value,
+            workers: root.querySelector('#kb-workers').value, budget: root.querySelector('#kb-budget').value,
+            roles: roleNames.map(function (name, index) {
+              const modelChoice = root.querySelector('[data-role-model="' + index + '"]').value;
+              const effortChoice = root.querySelector('[data-role-effort="' + index + '"]').value;
+              return { name: name, model: modelChoice === 'Inherit orchestrator' ? runtime + ' (inherited)' : modelChoice, effort: effortChoice === 'Inherit' ? effort + ' (inherited)' : effortChoice };
+            })
+          }
+        };
+        runs.push(run);
+        renderRuns();
+        showPreviewRun(run);
+      });
+      root.querySelector('#kb-prompt').addEventListener('input', function () { this.setCustomValidity(''); });
+      root.querySelector('#kb-run-project').addEventListener('change', renderRuns);
+      root.querySelector('#kb-run-status').addEventListener('change', renderRuns);
+      root.querySelector('#kb-metrics-project').addEventListener('change', renderMetrics);
+      root.querySelector('#kb-command-query').addEventListener('input', renderCommands);
+      root.querySelector('#kb-guidance-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const input = root.querySelector('#kb-guidance');
+        const guidance = input.value.trim();
+        if (!guidance) return;
+        const entry = document.createElement('li');
+        const timestamp = document.createElement('time');
+        timestamp.textContent = 'Just now · Preview';
+        entry.appendChild(timestamp);
+        entry.appendChild(document.createTextNode('Guidance recorded: ' + guidance));
+        root.querySelector('#kb-activity-events').prepend(entry);
+        root.querySelector('#kb-guidance-status').textContent = 'Guidance recorded in preview. A real run will show queued, delivered, and acknowledged states.';
+        root.querySelector('#kb-guidance-status').hidden = false;
+        input.value = '';
+      });
+      root.querySelector('#kb-changes-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const feedback = root.querySelector('#kb-changes-input').value.trim();
+        if (feedback) recordDecision(false, feedback);
+      });
+      root.addEventListener('keydown', function (event) {
+        if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); openCommands(); }
+        if (event.key === 'Escape' && !root.querySelector('#kb-command-panel').hidden) { event.preventDefault(); closeCommands(); }
+        if (event.key === 'ArrowDown' && event.target.id === 'kb-command-query') {
+          const first = root.querySelector('#kb-command-results button');
+          if (first) { event.preventDefault(); first.focus(); }
+        }
+      });
+      function renderDesign() {
+        root.classList.toggle('kb-tight', state.density === 'Compact');
+        const graphite = state.accent === 'Graphite';
+        root.style.setProperty('--kb-accent', graphite ? 'light-dark(#425466, #c0ccd8)' : 'light-dark(#4359c7, #a2b0ff)');
+        root.style.setProperty('--kb-accent-bg', graphite ? 'light-dark(#eaf0f5, #293340)' : 'light-dark(#edf0ff, #252d4b)');
+        root.style.setProperty('--kb-accent-button', graphite ? 'light-dark(#334155, #c0ccd8)' : 'light-dark(#4359c7, #bac4ff)');
+        root.style.setProperty('--kb-accent-button-text', graphite ? 'light-dark(#ffffff, #18212b)' : 'light-dark(#ffffff, #192340)');
+      }
+      renderAgent('launch'); renderRuns(); updateResolved(); renderMetrics(); renderInspector('decision'); renderDesign(); navigate('run');
+      if (globalThis.Tweak) {
+        const tweak = new Tweak({ container: root, onChange: renderDesign });
+        tweak.addSelect(state, 'density', { label: 'Page density', options: ['Comfortable', 'Compact'] });
+        tweak.addSelect(state, 'accent', { label: 'Accent', options: ['Indigo', 'Graphite'] });
+      }
+    }());
+  </script>
+</div>

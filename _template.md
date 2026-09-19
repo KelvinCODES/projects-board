@@ -21,6 +21,7 @@ Detail plan: <path to the plan markdown>
 - [ ] POC
 - [ ] Verify
 - [ ] Spec & Tickets
+  - spec: ~/code/moveworks-kb/specs/<branch-name>.md
 - [ ] Implement
 - [ ] Converge
 - [ ] Regression
@@ -30,10 +31,11 @@ Detail plan: <path to the plan markdown>
 <!--
 Format rules (the board at board.py renders this file):
 - phase: ONE word, from the pipeline vocabulary: poc | spec | tickets |
-  implementing | converging | regression | done | shipped. Progress narrative
-  belongs in ## Steps, never on this line. done and shipped both fold the
-  project into the index's done row (the board's "⚑ shipped" button writes
-  shipped).
+  implementing | converging | regression | paused | done | shipped. Progress
+  narrative belongs in ## Steps, never on this line. paused parks a project in
+  the index's last section and out of the needs-you rail; say why in a
+  `- paused:` bullet. done and shipped both fold the project into the index's
+  done row (the board's "⚑ shipped" button writes shipped).
 - prs / blockers: `none` (or `none yet`) means empty; anything else shows
   as content, and any non-none blockers mark the project blocked.
 - Description (the free lines above Detail plan): ONLY the `Tested:` block,
@@ -41,12 +43,15 @@ Format rules (the board at board.py renders this file):
   lines (Group DM / Channel / 1:1 DM ...), matching the poc video's order,
   one `<check> → <result>` bullet per row, the same grouping as the
   go/no-go package. The go/no-go decision lives on its Steps entry,
-  `- [x] go/no-go: <verdict> (<date>) <notion url>` (step labels linkify
-  URLs), never in the description. What the feature is lives in the title
+  `- [x] go/no-go: <verdict> (<date>) <doc path>` (the KB markdown path;
+  the spec written in the same step sits beside it as `- spec: <specs path>`;
+  the board's go/no-go button opens it in Obsidian), never in the description. What the feature is lives in the title
   and meta rows; mechanism prose lives in the plan or the log.
   Plain `- ` bullets render as desc lines, while a bullet starting `word:`
   becomes a meta row, so lead each bullet with the check itself.
 - last-updated: ISO date, bump on every edit.
+- lane: 1, 2 or 3, which live-test stack this project has claimed (local-bot-session
+  skill, *Lanes*); set before the first botsync, check sibling files first.
 - Steps: `[x]` done, `[~]` in progress, `[ ]` todo; two-space indent nests
   sub-steps. Exactly one `[~]` at a time is the convention. While a step is
   in progress, keep a live sub-checklist nested under it (what's done, what
@@ -58,7 +63,11 @@ Format rules (the board at board.py renders this file):
   and the POC commit nest under Verify; the go/no-go gate closes
   Spec & Tickets; PRs open under Implement; CI-green + reviewer-quiet under
   Converge; merge/land under Ship. Never invent a new top-level station.
-- ## Lanes (optional): `- <name>: #A -> #B -> ~#C (note)` bullets chain PRs
+- ## Lanes (optional): `- <name>: #A -> #B -> ~#C (note)` bullets chain PRs; `#C(+a/-b)` pins a
+  chip's own delta when GitHub's count is the whole lane (a join PR with two open parents). A join
+  PR appears once, at the end of the lane whose code reaches it last; the other lane ends at its
+  own last PR with a note `(feeds the join #C)`. Blocked is not parked: the dependency line
+  already outlines the chip red (dotted for one open parent, solid for two or more)
   into lanes. `~#N` = parked; `!#N` = a human commented and it needs a reply
   (yellow dotted chip + a "needs you" row on the index); remove the `!`
   once answered. Each PR's branch and base show live from GitHub in the

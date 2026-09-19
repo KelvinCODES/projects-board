@@ -7,10 +7,17 @@ videos/
 __pycache__/
 board.log
 .pr-cache.json
+.favorites.json
 
 # Status files are per-machine runtime state, not code. They change every few
 # minutes and name internal branches and tickets.
 *.md
+!/docs/orchestration-plan.md
+!/docs/feature-backlog.md
 !_template.md
 !README.md
 archive/
+
+# Browser profile for the screencast recorder (Slack login), lives in the data dir
+chrome-profile/
+.DS_Store
