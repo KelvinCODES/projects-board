@@ -32,6 +32,7 @@ Usage: board.py [--port 7788] [--no-open] [--archive SLUG]
 """
 
 import argparse
+import os
 import html
 import json
 import re
@@ -48,7 +49,7 @@ from urllib.parse import parse_qs, quote, urlencode, urlparse
 
 from activity import CURRENT_WINDOW_SECS, recent_activity_signals_by_project_stem
 
-BOARD_DIR = Path(__file__).resolve().parent
+BOARD_DIR = Path(os.environ.get('PROJECTS_BOARD_DIR', Path.home() / '.claude' / 'projects-board')).resolve()
 ROW_FIELDS = ('milestone', 'poc-artifacts', 'branch', 'worktree', 'prs', 'blockers')
 FIELD_LABELS = {'poc-artifacts': 'Poc Artifacts'}
 VIDEO_TYPES = {'.mp4': 'video/mp4', '.mov': 'video/quicktime',

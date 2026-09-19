@@ -27,13 +27,14 @@ after it, and writes three check frames to /tmp/record-frames/ to look at before
 """
 
 import argparse
+import os
 import time
 import re
 import subprocess
 from datetime import date
 from pathlib import Path
 
-BOARD = Path(__file__).resolve().parent
+BOARD = Path(os.environ.get('PROJECTS_BOARD_DIR', Path.home() / '.claude' / 'projects-board')).resolve()
 BULLETS = {'poc': 'video-poc', 'verify': 'video'}
 SLACK_TEAM_ID = 'T1S6DF4G6'
 
