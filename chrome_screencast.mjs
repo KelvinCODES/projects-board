@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Record one Slack conversation through Chrome's DevTools screencast, no screen capture.
 // Usage: chrome_screencast.mjs <url> <seconds> <out.mp4> [--profile DIR] [--port N] [--position X,Y] [--warmup S]
-// Chrome runs from its own profile dir (one-time Slack login) and can sit behind other
+// Chrome runs from its own profile dir (~/.claude/chrome-profile-recorder, one-time Slack login,
+// never synced) with its disk cache in a temp dir that is deleted on exit. It can sit behind other
 // windows: frames are pulled with Page.captureScreenshot on a timer (paint-driven screencast
 // starves when the tab is occluded). Needs ffmpeg on PATH.
 
@@ -27,7 +28,7 @@ function parseArgs(argv) {
     url,
     seconds: Number(seconds),
     out,
-    profile: flag('--profile', join(process.env.HOME, '.claude/projects-board/chrome-profile')),
+    profile: flag('--profile', join(process.env.HOME, '.claude/chrome-profile-recorder')),
     port: Number(flag('--port', '9333')),
     position: flag('--position', '2000,2000'),
     warmup: Number(flag('--warmup', '3')),
@@ -35,11 +36,12 @@ function parseArgs(argv) {
   };
 }
 
-function launchChrome({ url, profile, port, position }) {
+function launchChrome({ url, profile, port, position }, cacheDir) {
   mkdirSync(profile, { recursive: true });
   const args = [
     `--remote-debugging-port=${port}`,
     `--user-data-dir=${profile}`,
+    `--disk-cache-dir=${cacheDir}`,
     `--window-size=${VIEWPORT.width},${VIEWPORT.height}`,
     `--window-position=${position}`,
     '--disable-backgrounding-occluded-windows',
@@ -131,22 +133,28 @@ function encode({ frames, fps }, out) {
 
 async function main() {
   const opts = parseArgs(process.argv.slice(2));
-  const chrome = launchChrome(opts);
-  const page = await findPage(opts.port, opts.url);
-  const cdp = await connect(page.webSocketDebuggerUrl);
+  const cacheDir = mkdtempSync(join(tmpdir(), 'screencast-cache-'));
   const dir = mkdtempSync(join(tmpdir(), 'screencast-'));
-  if (opts.warmup) {
-    console.log(`warming up ${opts.warmup}s so the page finishes loading …`);
-    await new Promise((r) => setTimeout(r, opts.warmup * 1000));
+  const chrome = launchChrome(opts, cacheDir);
+  let cdp;
+  try {
+    const page = await findPage(opts.port, opts.url);
+    cdp = await connect(page.webSocketDebuggerUrl);
+    if (opts.warmup) {
+      console.log(`warming up ${opts.warmup}s so the page finishes loading …`);
+      await new Promise((r) => setTimeout(r, opts.warmup * 1000));
+    }
+    console.log(`screencasting ${opts.seconds}s of ${page.url} …`);
+    const result = await captureFrames(cdp, opts.seconds, opts.fps, dir);
+    encode(result, opts.out);
+    console.log(`captured ${result.frames.length} frames`);
+    console.log(`wrote ${opts.out}`);
+  } finally {
+    cdp?.ws.close();
+    chrome.kill();
+    rmSync(dir, { recursive: true, force: true });
+    rmSync(cacheDir, { recursive: true, force: true });
   }
-  console.log(`screencasting ${opts.seconds}s of ${page.url} …`);
-  const result = await captureFrames(cdp, opts.seconds, opts.fps, dir);
-  encode(result, opts.out);
-  console.log(`captured ${result.frames.length} frames`);
-  rmSync(dir, { recursive: true, force: true });
-  cdp.ws.close();
-  chrome.kill();
-  console.log(`wrote ${opts.out}`);
 }
 
 main().catch((e) => {
