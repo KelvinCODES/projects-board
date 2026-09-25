@@ -35,6 +35,8 @@ from datetime import date
 from pathlib import Path
 
 BOARD = Path(os.environ.get('PROJECTS_BOARD_DIR', Path.home() / '.claude' / 'projects-board')).resolve()
+# The screencast helper ships with this script, not with the board data the symlink points at.
+HERE = Path(__file__).resolve().parent
 BULLETS = {'poc': 'video-poc', 'verify': 'video'}
 SLACK_TEAM_ID = 'T1S6DF4G6'
 
@@ -48,7 +50,7 @@ def record_slack_conversation_via_chrome(channel_id: str, seconds: int, out: Pat
     url = f'https://app.slack.com/client/{SLACK_TEAM_ID}/{channel_id}'
     if thread_ts:
         url += f'/thread/{channel_id}-{thread_ts}'
-    script = BOARD / 'chrome_screencast.mjs'
+    script = HERE / 'chrome_screencast.mjs'
     subprocess.run(['node', str(script), url, str(seconds), str(out), '--warmup', '1'], check=True)
 
 
